@@ -1,0 +1,540 @@
+
+ - final statistics:
+6 variables; iteration 0; function evaluation 0
+Function value 4.2567e+02; maximum gradient component mag -7.8930e-06
+Exit code = 0;  converg criter 1.0000e+01
+Var    Value     Gradient |Var    Value     Gradient |Var    Value     Gradient
+  1 -0.18183 -7.89304e-06 |  2 -0.08157 -6.22975e-08 |  3  0.03867  2.87290e-07
+  4 -0.06202  1.04753e-06 |  5  0.15226  6.77454e-08 |  6 -0.01639 -9.21786e-08
+
+ - final statistics:
+9 variables; iteration 0; function evaluation 0
+Function value 4.2567e+02; maximum gradient component mag -7.8930e-06
+Exit code = 0;  converg criter 1.0000e+01
+Var    Value     Gradient |Var    Value     Gradient |Var    Value     Gradient
+  1 -0.18183 -7.89303e-06 |  2 -0.02035  1.60980e-07 |  3 -0.20827 -2.46700e-07
+  4 -0.78355  2.15751e-08 |  5 -0.08157 -6.22975e-08 |  6  0.03867  2.87290e-07
+  7 -0.06202  1.04753e-06 |  8  0.15226  6.77454e-08 |  9 -0.01639 -9.21786e-08
+
+ - final statistics:
+27 variables; iteration 0; function evaluation 0
+Function value 4.8229e+02; maximum gradient component mag 1.6238e-05
+Exit code = 0;  converg criter 1.0000e+00
+Var    Value     Gradient |Var    Value     Gradient |Var    Value     Gradient
+  1 -0.61958  1.62381e-05 |  2 -0.18183 -7.89192e-06 |  3 -0.16542 -6.64504e-08
+  4  0.33624 -1.00127e-07 |  5 -0.02035  1.60971e-07 |  6 -0.20827 -2.46695e-07
+  7 -0.78355  2.15750e-08 |  8  0.10483 -9.91951e-07 |  9  0.13439 -5.73624e-07
+ 10  0.29053  4.17358e-08 | 11  0.98594 -1.36199e-08 | 12  0.00000 -8.11855e-30
+ 13  0.19288  1.69876e-06 | 14 -0.05316  5.13928e-07 | 15  0.34881 -1.30039e-06
+ 16  0.00580  1.43807e-07 | 17 -0.21595  1.23749e-06 | 18 -0.08157 -6.22973e-08
+ 19  0.05829 -6.79377e-08 | 20  0.03867  2.87294e-07 | 21 -0.11568 -5.77768e-08
+ 22 -0.06202  1.04754e-06 | 23 -0.21172 -1.72583e-07 | 24  0.15226  6.77462e-08
+ 25 -0.10499 -1.35579e-07 | 26 -0.01639 -9.21784e-08 | 27 -0.04868 -3.06899e-08
+
+ - final statistics:
+198 variables; iteration 0; function evaluation 0
+Function value 4.8229e+02; maximum gradient component mag 3.4272e-05
+Exit code = 0;  converg criter 1.0000e+00
+Var    Value     Gradient |Var    Value     Gradient |Var    Value     Gradient
+  1  0.01484  3.42720e-05 |  2 -0.02461  2.78322e-05 |  3 -0.04726 -2.71161e-05
+  4 -0.61958  1.62384e-05 |  5 -0.18183 -7.89076e-06 |  6 -0.16542 -6.64500e-08
+  7  0.33624 -1.00126e-07 |  8 -0.02035  1.60962e-07 |  9 -0.20827 -2.46691e-07
+ 10 -0.78355  2.15748e-08 | 11  0.10483 -9.91999e-07 | 12  0.13439 -5.73612e-07
+ 13  0.29053  4.17716e-08 | 14  0.98594 -1.36197e-08 | 15  0.00000 -8.11855e-30
+ 16  0.19288  1.69877e-06 | 17 -0.05316  5.13933e-07 | 18  0.34881 -1.30040e-06
+ 19  0.00580  1.43808e-07 | 20 -0.21595  1.23751e-06 | 21 -0.08157 -6.22970e-08
+ 22  0.05829 -6.79378e-08 | 23  0.03867  2.87299e-07 | 24 -0.11568 -5.77774e-08
+ 25 -0.06202  1.04754e-06 | 26 -0.21172 -1.72583e-07 | 27  0.15226  6.77472e-08
+ 28 -0.10499 -1.35579e-07 | 29 -0.01639 -9.21782e-08 | 30 -0.04868 -3.06899e-08
+ 31 -0.00210  4.58207e-08 | 32 -0.00265 -4.50427e-08 | 33 -0.00408 -1.43126e-07
+ 34 -0.00660  1.74707e-07 | 35 -0.00962 -1.25554e-07 | 36 -0.00990 -7.41113e-08
+ 37 -0.00428  6.22010e-08 | 38  0.00722  4.46030e-08 | 39  0.00372 -4.87060e-08
+ 40  0.00405  5.27992e-08 | 41  0.01088 -2.50509e-08 | 42  0.00657 -2.18051e-08
+ 43  0.00304 -2.67754e-08 | 44  0.01139  1.17453e-07 | 45  0.01233 -2.09526e-08
+ 46 -0.00118  4.09583e-08 | 47 -0.00706 -2.41096e-08 | 48 -0.01145 -1.26481e-07
+ 49 -0.01252 -1.19104e-08 | 50 -0.01570  3.06364e-08 | 51 -0.00652  2.00580e-08
+ 52  0.00374  6.04568e-09 | 53 -0.00857  8.62086e-08 | 54 -0.03342  3.68198e-08
+ 55 -0.04016  3.53059e-08 | 56 -0.03060 -4.90846e-08 | 57 -0.03742  1.31896e-08
+ 58 -0.04738  2.85409e-07 | 59 -0.04604  4.61748e-08 | 60 -0.02678 -4.90602e-08
+ 61 -0.00880  9.89329e-08 | 62 -0.00656 -2.91636e-08 | 63 -0.02353  1.28910e-07
+ 64 -0.03003 -4.31003e-08 | 65 -0.04617 -2.91954e-07 | 66 -0.05182 -1.30601e-07
+ 67 -0.03741 -1.16429e-07 | 68 -0.01225  4.61077e-08 | 69 -0.01541 -1.98612e-07
+ 70 -0.02800 -1.45499e-07 | 71 -0.03380 -2.86560e-08 | 72 -0.01850 -2.76894e-08
+ 73  0.02064 -2.06019e-07 | 74  0.01589 -3.00640e-07 | 75 -0.00566 -5.20403e-07
+ 76 -0.00625 -2.87977e-08 | 77  0.01070  1.46061e-07 | 78  0.07909  3.89080e-07
+ 79  0.13993  1.66005e-06 | 80 -0.01049  1.66464e-07 | 81  0.01974  1.79534e-07
+ 82  0.02667  5.52929e-07 | 83  0.09173  1.53126e-06 | 84  0.13845  3.16830e-06
+ 85  0.03428  2.92041e-07 | 86  0.07026  2.25597e-07 | 87  0.00076  7.76241e-08
+ 88  0.00152  5.10360e-08 | 89  0.00383  1.67840e-08 | 90  0.00809 -2.64532e-09
+ 91  0.00723  1.50036e-07 | 92 -0.00016 -4.91639e-08 | 93  0.00269  7.01121e-08
+ 94  0.02349  3.56036e-08 | 95  0.01157  1.03826e-07 | 96 -0.00095  6.50860e-08
+ 97 -0.00759  1.35285e-07 | 98 -0.00977  1.93492e-07 | 99 -0.00268  1.31687e-07
+100  0.00965 -6.57396e-08 |101 -0.00130 -1.04085e-07 |102 -0.02118 -1.52303e-07
+103 -0.01775 -3.82585e-08 |104 -0.01092 -5.63695e-09 |105 -0.00895 -9.42992e-08
+106  0.00360  1.19380e-07 |107 -0.01049 -2.03212e-07 |108 -0.02287  1.08990e-08
+109 -0.04456 -1.60709e-07 |110 -0.04959 -8.70826e-08 |111 -0.05169 -1.60535e-07
+112 -0.05511 -1.41344e-07 |113 -0.06286  2.80550e-07 |114 -0.07098 -1.85394e-07
+115 -0.07899  2.48402e-08 |116 -0.06150 -7.83514e-08 |117 -0.04711  1.80072e-07
+118 -0.00143 -1.94999e-07 |119  0.06727 -4.90061e-07 |120  0.01422 -2.56762e-07
+121 -0.02113 -1.69016e-07 |122  0.00686 -2.94999e-07 |123  0.02462 -2.23171e-07
+124 -0.02045 -4.28360e-07 |125 -0.04849 -2.72614e-07 |126 -0.06223 -1.70078e-07
+127 -0.06057 -2.53365e-07 |128 -0.04218 -5.72909e-07 |129 -0.00671 -8.61384e-07
+130  0.01660 -1.01524e-06 |131  0.00965 -1.10590e-06 |132  0.03794 -1.49138e-06
+133  0.04107 -1.04343e-06 |134  0.09941 -7.69526e-07 |135  0.06199 -2.51392e-07
+136  0.09447  3.34649e-07 |137  0.10319  4.69218e-07 |138  0.03960  7.03112e-07
+139  0.01487  7.85246e-07 |140  0.03656  9.45178e-07 |141  0.11124  9.57541e-07
+142  0.06238  3.58245e-07 |143  0.00970  6.63097e-08 |144  0.00223 -5.80643e-08
+145 -0.00711 -1.75574e-07 |146 -0.01231  5.55318e-08 |147 -0.00587  3.26958e-08
+148  0.00355  7.33069e-09 |149  0.00728  4.91460e-08 |150 -0.01185 -9.59550e-09
+151 -0.01311  3.12625e-10 |152 -0.01184  3.92459e-08 |153 -0.01737 -1.11079e-07
+154 -0.02656 -9.89390e-08 |155 -0.00710 -1.57046e-07 |156  0.01024 -6.90772e-08
+157  0.01132  2.93126e-08 |158  0.01070  9.25085e-08 |159  0.02804 -3.43017e-08
+160  0.00633 -9.44940e-08 |161 -0.00348  4.01749e-08 |162  0.02202  1.21303e-07
+163  0.02450  3.30489e-07 |164 -0.00562  4.14985e-08 |165  0.00832  3.37988e-07
+166  0.02302  1.65203e-07 |167  0.03321  4.17429e-07 |168  0.05413  5.33290e-07
+169  0.03106  4.64018e-07 |170 -0.01323  2.71673e-07 |171 -0.00788  5.35486e-07
+172 -0.02368  5.09916e-07 |173 -0.04182  2.07865e-07 |174 -0.05466  2.11538e-07
+175 -0.04114  5.57433e-07 |176 -0.04028  2.23247e-07 |177 -0.03536 -2.20770e-08
+178 -0.04827  2.71287e-07 |179 -0.05846  4.00494e-07 |180 -0.04491  3.58813e-07
+181 -0.03035  4.15098e-07 |182 -0.02916  1.69565e-07 |183 -0.05084  4.73248e-07
+184 -0.02560  8.68127e-07 |185  0.01667  6.26944e-07 |186 -0.00177  8.00596e-07
+187 -0.01489  8.14234e-07 |188 -0.01255  6.91846e-07 |189 -0.00466  5.21603e-07
+190 -0.04118  4.97403e-07 |191 -0.02324  6.03114e-07 |192  0.07057  8.58835e-07
+193  0.08588  1.01829e-06 |194  0.05229  1.35821e-06 |195  0.01577  6.40046e-07
+196  0.02602  4.67776e-07 |197  0.02773  4.00708e-07 |198  0.06815  4.18672e-08
+
+ - final statistics:
+209 variables; iteration 0; function evaluation 0
+Function value 4.8229e+02; maximum gradient component mag 3.4272e-05
+Exit code = 0;  converg criter 1.0000e+00
+Var    Value     Gradient |Var    Value     Gradient |Var    Value     Gradient
+  1  0.01484  3.42720e-05 |  2 -0.02461  2.78322e-05 |  3 -0.04726 -2.71160e-05
+  4 -0.61958  1.62386e-05 |  5  0.00660 -8.64122e-08 |  6  0.00000  0.00000e+00
+  7  0.00000  0.00000e+00 |  8  0.00000  0.00000e+00 |  9  0.00000  0.00000e+00
+ 10  0.00000  0.00000e+00 | 11  0.00000  0.00000e+00 | 12  0.00000  0.00000e+00
+ 13  0.00000  0.00000e+00 | 14  0.00000  0.00000e+00 | 15  0.00000  0.00000e+00
+ 16 -0.18183 -7.89027e-06 | 17 -0.16542 -6.64498e-08 | 18  0.33624 -1.00126e-07
+ 19 -0.02035  1.60958e-07 | 20 -0.20827 -2.46688e-07 | 21 -0.78355  2.15747e-08
+ 22  0.10483 -9.92020e-07 | 23  0.13439 -5.73607e-07 | 24  0.29053  4.17871e-08
+ 25  0.98594 -1.36196e-08 | 26  0.00000 -8.11855e-30 | 27  0.19288  1.69878e-06
+ 28 -0.05316  5.13936e-07 | 29  0.34881 -1.30041e-06 | 30  0.00580  1.43809e-07
+ 31 -0.21595  1.23751e-06 | 32 -0.08157 -6.22969e-08 | 33  0.05829 -6.79378e-08
+ 34  0.03867  2.87301e-07 | 35 -0.11568 -5.77777e-08 | 36 -0.06202  1.04755e-06
+ 37 -0.21172 -1.72583e-07 | 38  0.15226  6.77475e-08 | 39 -0.10499 -1.35579e-07
+ 40 -0.01639 -9.21781e-08 | 41 -0.04868 -3.06899e-08 | 42 -0.00210  4.58207e-08
+ 43 -0.00265 -4.50427e-08 | 44 -0.00408 -1.43126e-07 | 45 -0.00660  1.74707e-07
+ 46 -0.00962 -1.25554e-07 | 47 -0.00990 -7.41113e-08 | 48 -0.00428  6.22010e-08
+ 49  0.00722  4.46030e-08 | 50  0.00372 -4.87060e-08 | 51  0.00405  5.27992e-08
+ 52  0.01088 -2.50509e-08 | 53  0.00657 -2.18051e-08 | 54  0.00304 -2.67754e-08
+ 55  0.01139  1.17453e-07 | 56  0.01233 -2.09526e-08 | 57 -0.00118  4.09583e-08
+ 58 -0.00706 -2.41096e-08 | 59 -0.01145 -1.26481e-07 | 60 -0.01252 -1.19104e-08
+ 61 -0.01570  3.06364e-08 | 62 -0.00652  2.00580e-08 | 63  0.00374  6.04568e-09
+ 64 -0.00857  8.62086e-08 | 65 -0.03342  3.68198e-08 | 66 -0.04016  3.53059e-08
+ 67 -0.03060 -4.90846e-08 | 68 -0.03742  1.31896e-08 | 69 -0.04738  2.85409e-07
+ 70 -0.04604  4.61747e-08 | 71 -0.02678 -4.90602e-08 | 72 -0.00880  9.89329e-08
+ 73 -0.00656 -2.91636e-08 | 74 -0.02353  1.28910e-07 | 75 -0.03003 -4.31003e-08
+ 76 -0.04617 -2.91954e-07 | 77 -0.05182 -1.30601e-07 | 78 -0.03741 -1.16429e-07
+ 79 -0.01225  4.61077e-08 | 80 -0.01541 -1.98612e-07 | 81 -0.02800 -1.45499e-07
+ 82 -0.03380 -2.86560e-08 | 83 -0.01850 -2.76895e-08 | 84  0.02064 -2.06020e-07
+ 85  0.01589 -3.00640e-07 | 86 -0.00566 -5.20403e-07 | 87 -0.00625 -2.87979e-08
+ 88  0.01070  1.46060e-07 | 89  0.07909  3.89079e-07 | 90  0.13993  1.66004e-06
+ 91 -0.01049  1.66464e-07 | 92  0.01974  1.79533e-07 | 93  0.02667  5.52929e-07
+ 94  0.09173  1.53126e-06 | 95  0.13845  3.16830e-06 | 96  0.03428  2.92040e-07
+ 97  0.07026  2.25596e-07 | 98  0.00076  7.76241e-08 | 99  0.00152  5.10360e-08
+100  0.00383  1.67840e-08 |101  0.00809 -2.64532e-09 |102  0.00723  1.50036e-07
+103 -0.00016 -4.91639e-08 |104  0.00269  7.01121e-08 |105  0.02349  3.56036e-08
+106  0.01157  1.03826e-07 |107 -0.00095  6.50860e-08 |108 -0.00759  1.35285e-07
+109 -0.00977  1.93492e-07 |110 -0.00268  1.31687e-07 |111  0.00965 -6.57396e-08
+112 -0.00130 -1.04085e-07 |113 -0.02118 -1.52303e-07 |114 -0.01775 -3.82585e-08
+115 -0.01092 -5.63694e-09 |116 -0.00895 -9.42992e-08 |117  0.00360  1.19380e-07
+118 -0.01049 -2.03212e-07 |119 -0.02287  1.08990e-08 |120 -0.04456 -1.60709e-07
+121 -0.04959 -8.70826e-08 |122 -0.05169 -1.60535e-07 |123 -0.05511 -1.41344e-07
+124 -0.06286  2.80550e-07 |125 -0.07098 -1.85393e-07 |126 -0.07899  2.48403e-08
+127 -0.06150 -7.83513e-08 |128 -0.04711  1.80072e-07 |129 -0.00143 -1.94998e-07
+130  0.06727 -4.90060e-07 |131  0.01422 -2.56762e-07 |132 -0.02113 -1.69016e-07
+133  0.00686 -2.94998e-07 |134  0.02462 -2.23170e-07 |135 -0.02045 -4.28360e-07
+136 -0.04849 -2.72613e-07 |137 -0.06223 -1.70078e-07 |138 -0.06057 -2.53365e-07
+139 -0.04218 -5.72909e-07 |140 -0.00671 -8.61384e-07 |141  0.01660 -1.01524e-06
+142  0.00965 -1.10590e-06 |143  0.03794 -1.49138e-06 |144  0.04107 -1.04343e-06
+145  0.09941 -7.69527e-07 |146  0.06199 -2.51393e-07 |147  0.09447  3.34647e-07
+148  0.10319  4.69217e-07 |149  0.03960  7.03112e-07 |150  0.01487  7.85246e-07
+151  0.03656  9.45179e-07 |152  0.11124  9.57542e-07 |153  0.06238  3.58245e-07
+154  0.00970  6.63097e-08 |155  0.00223 -5.80643e-08 |156 -0.00711 -1.75574e-07
+157 -0.01231  5.55318e-08 |158 -0.00587  3.26958e-08 |159  0.00355  7.33069e-09
+160  0.00728  4.91460e-08 |161 -0.01185 -9.59550e-09 |162 -0.01311  3.12622e-10
+163 -0.01184  3.92459e-08 |164 -0.01737 -1.11079e-07 |165 -0.02656 -9.89390e-08
+166 -0.00710 -1.57046e-07 |167  0.01024 -6.90772e-08 |168  0.01132  2.93126e-08
+169  0.01070  9.25085e-08 |170  0.02804 -3.43017e-08 |171  0.00633 -9.44940e-08
+172 -0.00348  4.01749e-08 |173  0.02202  1.21303e-07 |174  0.02450  3.30489e-07
+175 -0.00562  4.14985e-08 |176  0.00832  3.37988e-07 |177  0.02302  1.65203e-07
+178  0.03321  4.17429e-07 |179  0.05413  5.33290e-07 |180  0.03106  4.64018e-07
+181 -0.01323  2.71673e-07 |182 -0.00788  5.35486e-07 |183 -0.02368  5.09916e-07
+184 -0.04182  2.07865e-07 |185 -0.05466  2.11538e-07 |186 -0.04114  5.57432e-07
+187 -0.04028  2.23247e-07 |188 -0.03536 -2.20773e-08 |189 -0.04827  2.71287e-07
+190 -0.05846  4.00494e-07 |191 -0.04491  3.58812e-07 |192 -0.03035  4.15097e-07
+193 -0.02916  1.69565e-07 |194 -0.05084  4.73248e-07 |195 -0.02560  8.68127e-07
+196  0.01667  6.26944e-07 |197 -0.00177  8.00596e-07 |198 -0.01489  8.14234e-07
+199 -0.01255  6.91846e-07 |200 -0.00466  5.21603e-07 |201 -0.04118  4.97403e-07
+202 -0.02324  6.03114e-07 |203  0.07057  8.58834e-07 |204  0.08588  1.01829e-06
+205  0.05229  1.35821e-06 |206  0.01577  6.40046e-07 |207  0.02602  4.67775e-07
+208  0.02773  4.00707e-07 |209  0.06815  4.18670e-08 |
+Warning: the following parameters had issues
+  selparm[17] is within 0.1% of upper bound: -1.00000e+00 < 8.99878e+00 < 9.00000e+00
+
+
+ - final statistics:
+260 variables; iteration 0; function evaluation 0
+Function value 4.8229e+02; maximum gradient component mag 3.4272e-05
+Exit code = 0;  converg criter 1.0000e-04
+Var    Value     Gradient |Var    Value     Gradient |Var    Value     Gradient
+  1  0.01484  3.42719e-05 |  2 -0.02461  2.78322e-05 |  3 -0.04726 -2.71160e-05
+  4 -0.61958  1.62388e-05 |  5 -0.00714 -7.74598e-07 |  6 -0.00480 -8.24611e-07
+  7  0.00082 -7.50206e-07 |  8 -0.00970 -9.33008e-07 |  9 -0.01782 -8.41138e-07
+ 10 -0.01464 -9.49051e-07 | 11 -0.00261 -7.35666e-07 | 12  0.00265 -9.08877e-07
+ 13 -0.00291 -7.48697e-07 | 14 -0.00556 -5.87468e-07 | 15  0.00140 -7.21506e-07
+ 16 -0.00453 -8.46508e-07 | 17 -0.00823 -5.30120e-07 | 18 -0.00338 -6.34816e-07
+ 19  0.00718 -4.18360e-07 | 20  0.00280 -2.50538e-07 | 21  0.00577 -6.66571e-08
+ 22  0.02674 -9.03408e-08 | 23  0.00781 -7.37922e-08 | 24 -0.00240 -4.21307e-07
+ 25 -0.00114 -3.68740e-07 | 26 -0.00395 -3.91364e-07 | 27  0.02307 -4.27072e-07
+ 28  0.02843 -7.27594e-08 | 29  0.00155 -2.62394e-07 | 30  0.00802  1.66502e-07
+ 31 -0.00120  3.34235e-07 | 32 -0.01470  1.25039e-07 | 33 -0.02525  7.86833e-07
+ 34 -0.02139  1.06093e-06 | 35 -0.01686  9.90487e-07 | 36 -0.02057  6.58903e-07
+ 37 -0.02109  1.65997e-06 | 38 -0.01882  1.71332e-06 | 39 -0.01175  1.55483e-06
+ 40  0.00393  2.07361e-06 | 41  0.00488  2.18473e-06 | 42 -0.01428  1.98286e-06
+ 43 -0.01000  1.76287e-06 | 44  0.00482  2.45797e-06 | 45 -0.00092  1.40342e-06
+ 46 -0.00852  5.67081e-07 | 47  0.00670 -5.91639e-09 | 48  0.02199  6.39286e-07
+ 49  0.04004 -2.17676e-07 | 50  0.01751 -8.41516e-07 | 51  0.00405 -1.95860e-06
+ 52  0.01408 -2.48040e-06 | 53  0.02021 -7.54162e-07 | 54  0.01315 -1.53287e-06
+ 55  0.00656 -7.03772e-07 | 56  0.00660 -8.64118e-08 | 57  0.00000  0.00000e+00
+ 58  0.00000  0.00000e+00 | 59  0.00000  0.00000e+00 | 60  0.00000  0.00000e+00
+ 61  0.00000  0.00000e+00 | 62  0.00000  0.00000e+00 | 63  0.00000  0.00000e+00
+ 64  0.00000  0.00000e+00 | 65  0.00000  0.00000e+00 | 66  0.00000  0.00000e+00
+ 67 -0.18183 -7.88955e-06 | 68 -0.16542 -6.64496e-08 | 69  0.33624 -1.00126e-07
+ 70 -0.02035  1.60952e-07 | 71 -0.20827 -2.46685e-07 | 72 -0.78355  2.15746e-08
+ 73  0.10483 -9.92049e-07 | 74  0.13439 -5.73599e-07 | 75  0.29053  4.18086e-08
+ 76  0.98594 -1.36194e-08 | 77  0.00000 -8.11855e-30 | 78  0.19288  1.69879e-06
+ 79 -0.05316  5.13939e-07 | 80  0.34881 -1.30042e-06 | 81  0.00580  1.43809e-07
+ 82 -0.21595  1.23752e-06 | 83 -0.08157 -6.22968e-08 | 84  0.05829 -6.79378e-08
+ 85  0.03867  2.87303e-07 | 86 -0.11568 -5.77781e-08 | 87 -0.06202  1.04755e-06
+ 88 -0.21172 -1.72584e-07 | 89  0.15226  6.77479e-08 | 90 -0.10499 -1.35579e-07
+ 91 -0.01639 -9.21780e-08 | 92 -0.04868 -3.06899e-08 | 93 -0.00210  4.58207e-08
+ 94 -0.00265 -4.50427e-08 | 95 -0.00408 -1.43126e-07 | 96 -0.00660  1.74707e-07
+ 97 -0.00962 -1.25554e-07 | 98 -0.00990 -7.41113e-08 | 99 -0.00428  6.22010e-08
+100  0.00722  4.46030e-08 |101  0.00372 -4.87060e-08 |102  0.00405  5.27992e-08
+103  0.01088 -2.50509e-08 |104  0.00657 -2.18051e-08 |105  0.00304 -2.67754e-08
+106  0.01139  1.17453e-07 |107  0.01233 -2.09526e-08 |108 -0.00118  4.09583e-08
+109 -0.00706 -2.41096e-08 |110 -0.01145 -1.26481e-07 |111 -0.01252 -1.19104e-08
+112 -0.01570  3.06364e-08 |113 -0.00652  2.00580e-08 |114  0.00374  6.04564e-09
+115 -0.00857  8.62085e-08 |116 -0.03342  3.68198e-08 |117 -0.04016  3.53058e-08
+118 -0.03060 -4.90847e-08 |119 -0.03742  1.31896e-08 |120 -0.04738  2.85409e-07
+121 -0.04604  4.61747e-08 |122 -0.02678 -4.90603e-08 |123 -0.00880  9.89328e-08
+124 -0.00656 -2.91638e-08 |125 -0.02353  1.28910e-07 |126 -0.03003 -4.31003e-08
+127 -0.04617 -2.91954e-07 |128 -0.05182 -1.30602e-07 |129 -0.03741 -1.16429e-07
+130 -0.01225  4.61077e-08 |131 -0.01541 -1.98612e-07 |132 -0.02800 -1.45499e-07
+133 -0.03380 -2.86561e-08 |134 -0.01850 -2.76896e-08 |135  0.02064 -2.06020e-07
+136  0.01589 -3.00640e-07 |137 -0.00566 -5.20403e-07 |138 -0.00625 -2.87981e-08
+139  0.01070  1.46060e-07 |140  0.07909  3.89078e-07 |141  0.13993  1.66004e-06
+142 -0.01049  1.66463e-07 |143  0.01974  1.79533e-07 |144  0.02667  5.52929e-07
+145  0.09173  1.53125e-06 |146  0.13845  3.16830e-06 |147  0.03428  2.92040e-07
+148  0.07026  2.25596e-07 |149  0.00076  7.76241e-08 |150  0.00152  5.10360e-08
+151  0.00383  1.67840e-08 |152  0.00809 -2.64532e-09 |153  0.00723  1.50036e-07
+154 -0.00016 -4.91639e-08 |155  0.00269  7.01121e-08 |156  0.02349  3.56036e-08
+157  0.01157  1.03826e-07 |158 -0.00095  6.50860e-08 |159 -0.00759  1.35285e-07
+160 -0.00977  1.93492e-07 |161 -0.00268  1.31687e-07 |162  0.00965 -6.57396e-08
+163 -0.00130 -1.04085e-07 |164 -0.02118 -1.52303e-07 |165 -0.01775 -3.82586e-08
+166 -0.01092 -5.63697e-09 |167 -0.00895 -9.42992e-08 |168  0.00360  1.19379e-07
+169 -0.01049 -2.03212e-07 |170 -0.02287  1.08989e-08 |171 -0.04456 -1.60709e-07
+172 -0.04959 -8.70826e-08 |173 -0.05169 -1.60535e-07 |174 -0.05511 -1.41344e-07
+175 -0.06286  2.80550e-07 |176 -0.07098 -1.85394e-07 |177 -0.07899  2.48402e-08
+178 -0.06150 -7.83513e-08 |179 -0.04711  1.80072e-07 |180 -0.00143 -1.94998e-07
+181  0.06727 -4.90060e-07 |182  0.01422 -2.56762e-07 |183 -0.02113 -1.69016e-07
+184  0.00686 -2.94998e-07 |185  0.02462 -2.23171e-07 |186 -0.02045 -4.28359e-07
+187 -0.04849 -2.72613e-07 |188 -0.06223 -1.70078e-07 |189 -0.06057 -2.53365e-07
+190 -0.04218 -5.72910e-07 |191 -0.00671 -8.61385e-07 |192  0.01660 -1.01524e-06
+193  0.00965 -1.10590e-06 |194  0.03794 -1.49138e-06 |195  0.04107 -1.04343e-06
+196  0.09941 -7.69528e-07 |197  0.06199 -2.51393e-07 |198  0.09447  3.34647e-07
+199  0.10319  4.69218e-07 |200  0.03960  7.03112e-07 |201  0.01487  7.85247e-07
+202  0.03656  9.45179e-07 |203  0.11124  9.57542e-07 |204  0.06238  3.58245e-07
+205  0.00970  6.63097e-08 |206  0.00223 -5.80643e-08 |207 -0.00711 -1.75574e-07
+208 -0.01231  5.55318e-08 |209 -0.00587  3.26958e-08 |210  0.00355  7.33070e-09
+211  0.00728  4.91460e-08 |212 -0.01185 -9.59550e-09 |213 -0.01311  3.12624e-10
+214 -0.01184  3.92459e-08 |215 -0.01737 -1.11079e-07 |216 -0.02656 -9.89390e-08
+217 -0.00710 -1.57046e-07 |218  0.01024 -6.90772e-08 |219  0.01132  2.93126e-08
+220  0.01070  9.25085e-08 |221  0.02804 -3.43017e-08 |222  0.00633 -9.44940e-08
+223 -0.00348  4.01750e-08 |224  0.02202  1.21303e-07 |225  0.02450  3.30489e-07
+226 -0.00562  4.14985e-08 |227  0.00832  3.37988e-07 |228  0.02302  1.65203e-07
+229  0.03321  4.17429e-07 |230  0.05413  5.33290e-07 |231  0.03106  4.64018e-07
+232 -0.01323  2.71673e-07 |233 -0.00788  5.35486e-07 |234 -0.02368  5.09916e-07
+235 -0.04182  2.07864e-07 |236 -0.05466  2.11538e-07 |237 -0.04114  5.57432e-07
+238 -0.04028  2.23247e-07 |239 -0.03536 -2.20774e-08 |240 -0.04827  2.71287e-07
+241 -0.05846  4.00494e-07 |242 -0.04491  3.58812e-07 |243 -0.03035  4.15097e-07
+244 -0.02916  1.69565e-07 |245 -0.05084  4.73247e-07 |246 -0.02560  8.68127e-07
+247  0.01667  6.26944e-07 |248 -0.00177  8.00596e-07 |249 -0.01489  8.14234e-07
+250 -0.01255  6.91845e-07 |251 -0.00466  5.21602e-07 |252 -0.04118  4.97403e-07
+253 -0.02324  6.03113e-07 |254  0.07057  8.58833e-07 |255  0.08588  1.01828e-06
+256  0.05229  1.35821e-06 |257  0.01577  6.40045e-07 |258  0.02602  4.67775e-07
+259  0.02773  4.00707e-07 |260  0.06815  4.18667e-08 |
+Estimating row 1 out of 260 for hessian
+Estimating row 2 out of 260 for hessian
+Estimating row 3 out of 260 for hessian
+Estimating row 4 out of 260 for hessian
+Estimating row 5 out of 260 for hessian
+Estimating row 6 out of 260 for hessian
+Estimating row 7 out of 260 for hessian
+Estimating row 8 out of 260 for hessian
+Estimating row 9 out of 260 for hessian
+Estimating row 10 out of 260 for hessian
+Estimating row 11 out of 260 for hessian
+Estimating row 12 out of 260 for hessian
+Estimating row 13 out of 260 for hessian
+Estimating row 14 out of 260 for hessian
+Estimating row 15 out of 260 for hessian
+Estimating row 16 out of 260 for hessian
+Estimating row 17 out of 260 for hessian
+Estimating row 18 out of 260 for hessian
+Estimating row 19 out of 260 for hessian
+Estimating row 20 out of 260 for hessian
+Estimating row 21 out of 260 for hessian
+Estimating row 22 out of 260 for hessian
+Estimating row 23 out of 260 for hessian
+Estimating row 24 out of 260 for hessian
+Estimating row 25 out of 260 for hessian
+Estimating row 26 out of 260 for hessian
+Estimating row 27 out of 260 for hessian
+Estimating row 28 out of 260 for hessian
+Estimating row 29 out of 260 for hessian
+Estimating row 30 out of 260 for hessian
+Estimating row 31 out of 260 for hessian
+Estimating row 32 out of 260 for hessian
+Estimating row 33 out of 260 for hessian
+Estimating row 34 out of 260 for hessian
+Estimating row 35 out of 260 for hessian
+Estimating row 36 out of 260 for hessian
+Estimating row 37 out of 260 for hessian
+Estimating row 38 out of 260 for hessian
+Estimating row 39 out of 260 for hessian
+Estimating row 40 out of 260 for hessian
+Estimating row 41 out of 260 for hessian
+Estimating row 42 out of 260 for hessian
+Estimating row 43 out of 260 for hessian
+Estimating row 44 out of 260 for hessian
+Estimating row 45 out of 260 for hessian
+Estimating row 46 out of 260 for hessian
+Estimating row 47 out of 260 for hessian
+Estimating row 48 out of 260 for hessian
+Estimating row 49 out of 260 for hessian
+Estimating row 50 out of 260 for hessian
+Estimating row 51 out of 260 for hessian
+Estimating row 52 out of 260 for hessian
+Estimating row 53 out of 260 for hessian
+Estimating row 54 out of 260 for hessian
+Estimating row 55 out of 260 for hessian
+Estimating row 56 out of 260 for hessian
+Estimating row 57 out of 260 for hessian
+Estimating row 58 out of 260 for hessian
+Estimating row 59 out of 260 for hessian
+Estimating row 60 out of 260 for hessian
+Estimating row 61 out of 260 for hessian
+Estimating row 62 out of 260 for hessian
+Estimating row 63 out of 260 for hessian
+Estimating row 64 out of 260 for hessian
+Estimating row 65 out of 260 for hessian
+Estimating row 66 out of 260 for hessian
+Estimating row 67 out of 260 for hessian
+Estimating row 68 out of 260 for hessian
+Estimating row 69 out of 260 for hessian
+Estimating row 70 out of 260 for hessian
+Estimating row 71 out of 260 for hessian
+Estimating row 72 out of 260 for hessian
+Estimating row 73 out of 260 for hessian
+Estimating row 74 out of 260 for hessian
+Estimating row 75 out of 260 for hessian
+Estimating row 76 out of 260 for hessian
+Estimating row 77 out of 260 for hessian
+Estimating row 78 out of 260 for hessian
+Estimating row 79 out of 260 for hessian
+Estimating row 80 out of 260 for hessian
+Estimating row 81 out of 260 for hessian
+Estimating row 82 out of 260 for hessian
+Estimating row 83 out of 260 for hessian
+Estimating row 84 out of 260 for hessian
+Estimating row 85 out of 260 for hessian
+Estimating row 86 out of 260 for hessian
+Estimating row 87 out of 260 for hessian
+Estimating row 88 out of 260 for hessian
+Estimating row 89 out of 260 for hessian
+Estimating row 90 out of 260 for hessian
+Estimating row 91 out of 260 for hessian
+Estimating row 92 out of 260 for hessian
+Estimating row 93 out of 260 for hessian
+Estimating row 94 out of 260 for hessian
+Estimating row 95 out of 260 for hessian
+Estimating row 96 out of 260 for hessian
+Estimating row 97 out of 260 for hessian
+Estimating row 98 out of 260 for hessian
+Estimating row 99 out of 260 for hessian
+Estimating row 100 out of 260 for hessian
+Estimating row 101 out of 260 for hessian
+Estimating row 102 out of 260 for hessian
+Estimating row 103 out of 260 for hessian
+Estimating row 104 out of 260 for hessian
+Estimating row 105 out of 260 for hessian
+Estimating row 106 out of 260 for hessian
+Estimating row 107 out of 260 for hessian
+Estimating row 108 out of 260 for hessian
+Estimating row 109 out of 260 for hessian
+Estimating row 110 out of 260 for hessian
+Estimating row 111 out of 260 for hessian
+Estimating row 112 out of 260 for hessian
+Estimating row 113 out of 260 for hessian
+Estimating row 114 out of 260 for hessian
+Estimating row 115 out of 260 for hessian
+Estimating row 116 out of 260 for hessian
+Estimating row 117 out of 260 for hessian
+Estimating row 118 out of 260 for hessian
+Estimating row 119 out of 260 for hessian
+Estimating row 120 out of 260 for hessian
+Estimating row 121 out of 260 for hessian
+Estimating row 122 out of 260 for hessian
+Estimating row 123 out of 260 for hessian
+Estimating row 124 out of 260 for hessian
+Estimating row 125 out of 260 for hessian
+Estimating row 126 out of 260 for hessian
+Estimating row 127 out of 260 for hessian
+Estimating row 128 out of 260 for hessian
+Estimating row 129 out of 260 for hessian
+Estimating row 130 out of 260 for hessian
+Estimating row 131 out of 260 for hessian
+Estimating row 132 out of 260 for hessian
+Estimating row 133 out of 260 for hessian
+Estimating row 134 out of 260 for hessian
+Estimating row 135 out of 260 for hessian
+Estimating row 136 out of 260 for hessian
+Estimating row 137 out of 260 for hessian
+Estimating row 138 out of 260 for hessian
+Estimating row 139 out of 260 for hessian
+Estimating row 140 out of 260 for hessian
+Estimating row 141 out of 260 for hessian
+Estimating row 142 out of 260 for hessian
+Estimating row 143 out of 260 for hessian
+Estimating row 144 out of 260 for hessian
+Estimating row 145 out of 260 for hessian
+Estimating row 146 out of 260 for hessian
+Estimating row 147 out of 260 for hessian
+Estimating row 148 out of 260 for hessian
+Estimating row 149 out of 260 for hessian
+Estimating row 150 out of 260 for hessian
+Estimating row 151 out of 260 for hessian
+Estimating row 152 out of 260 for hessian
+Estimating row 153 out of 260 for hessian
+Estimating row 154 out of 260 for hessian
+Estimating row 155 out of 260 for hessian
+Estimating row 156 out of 260 for hessian
+Estimating row 157 out of 260 for hessian
+Estimating row 158 out of 260 for hessian
+Estimating row 159 out of 260 for hessian
+Estimating row 160 out of 260 for hessian
+Estimating row 161 out of 260 for hessian
+Estimating row 162 out of 260 for hessian
+Estimating row 163 out of 260 for hessian
+Estimating row 164 out of 260 for hessian
+Estimating row 165 out of 260 for hessian
+Estimating row 166 out of 260 for hessian
+Estimating row 167 out of 260 for hessian
+Estimating row 168 out of 260 for hessian
+Estimating row 169 out of 260 for hessian
+Estimating row 170 out of 260 for hessian
+Estimating row 171 out of 260 for hessian
+Estimating row 172 out of 260 for hessian
+Estimating row 173 out of 260 for hessian
+Estimating row 174 out of 260 for hessian
+Estimating row 175 out of 260 for hessian
+Estimating row 176 out of 260 for hessian
+Estimating row 177 out of 260 for hessian
+Estimating row 178 out of 260 for hessian
+Estimating row 179 out of 260 for hessian
+Estimating row 180 out of 260 for hessian
+Estimating row 181 out of 260 for hessian
+Estimating row 182 out of 260 for hessian
+Estimating row 183 out of 260 for hessian
+Estimating row 184 out of 260 for hessian
+Estimating row 185 out of 260 for hessian
+Estimating row 186 out of 260 for hessian
+Estimating row 187 out of 260 for hessian
+Estimating row 188 out of 260 for hessian
+Estimating row 189 out of 260 for hessian
+Estimating row 190 out of 260 for hessian
+Estimating row 191 out of 260 for hessian
+Estimating row 192 out of 260 for hessian
+Estimating row 193 out of 260 for hessian
+Estimating row 194 out of 260 for hessian
+Estimating row 195 out of 260 for hessian
+Estimating row 196 out of 260 for hessian
+Estimating row 197 out of 260 for hessian
+Estimating row 198 out of 260 for hessian
+Estimating row 199 out of 260 for hessian
+Estimating row 200 out of 260 for hessian
+Estimating row 201 out of 260 for hessian
+Estimating row 202 out of 260 for hessian
+Estimating row 203 out of 260 for hessian
+Estimating row 204 out of 260 for hessian
+Estimating row 205 out of 260 for hessian
+Estimating row 206 out of 260 for hessian
+Estimating row 207 out of 260 for hessian
+Estimating row 208 out of 260 for hessian
+Estimating row 209 out of 260 for hessian
+Estimating row 210 out of 260 for hessian
+Estimating row 211 out of 260 for hessian
+Estimating row 212 out of 260 for hessian
+Estimating row 213 out of 260 for hessian
+Estimating row 214 out of 260 for hessian
+Estimating row 215 out of 260 for hessian
+Estimating row 216 out of 260 for hessian
+Estimating row 217 out of 260 for hessian
+Estimating row 218 out of 260 for hessian
+Estimating row 219 out of 260 for hessian
+Estimating row 220 out of 260 for hessian
+Estimating row 221 out of 260 for hessian
+Estimating row 222 out of 260 for hessian
+Estimating row 223 out of 260 for hessian
+Estimating row 224 out of 260 for hessian
+Estimating row 225 out of 260 for hessian
+Estimating row 226 out of 260 for hessian
+Estimating row 227 out of 260 for hessian
+Estimating row 228 out of 260 for hessian
+Estimating row 229 out of 260 for hessian
+Estimating row 230 out of 260 for hessian
+Estimating row 231 out of 260 for hessian
+Estimating row 232 out of 260 for hessian
+Estimating row 233 out of 260 for hessian
+Estimating row 234 out of 260 for hessian
+Estimating row 235 out of 260 for hessian
+Estimating row 236 out of 260 for hessian
+Estimating row 237 out of 260 for hessian
+Estimating row 238 out of 260 for hessian
+Estimating row 239 out of 260 for hessian
+Estimating row 240 out of 260 for hessian
+Estimating row 241 out of 260 for hessian
+Estimating row 242 out of 260 for hessian
+Estimating row 243 out of 260 for hessian
+Estimating row 244 out of 260 for hessian
+Estimating row 245 out of 260 for hessian
+Estimating row 246 out of 260 for hessian
+Estimating row 247 out of 260 for hessian
+Estimating row 248 out of 260 for hessian
+Estimating row 249 out of 260 for hessian
+Estimating row 250 out of 260 for hessian
+Estimating row 251 out of 260 for hessian
+Estimating row 252 out of 260 for hessian
+Estimating row 253 out of 260 for hessian
+Estimating row 254 out of 260 for hessian
+Estimating row 255 out of 260 for hessian
+Estimating row 256 out of 260 for hessian
+Estimating row 257 out of 260 for hessian
+Estimating row 258 out of 260 for hessian
+Estimating row 259 out of 260 for hessian
+Estimating row 260 out of 260 for hessian
+size of file gradfil1.tmp = 282000000
+size of file gradfil2.tmp = 0
+size of file varssave.tmp = 0
+size of file cmpdiff.tmp = 600000024

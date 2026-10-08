@@ -1,0 +1,579 @@
+---
+title: "Run grid / ensemble of models"
+author: "Genevieve Phillips"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+
+easypackages::libraries("dplyr","tidyr","r4ss","ggplot2")
+
+source("init.R")
+source("SS3_helper.r")
+source("SS3_support_functions.r")
+source("ss3runsFun.R")
+
+figure_loc = PATH_GRID_PLOT
+saveplot = function(label,size=1,type="png",res=800,...) {SavePlot(paste(figure_loc,figure_name,label,sep=""),type=type,size=size,res=res,...)}
+savepng = function(label, width=21, height=29.7,units="cm",res=800,bg = "white",...)  { png(paste(figure_loc,figure_name,label,sep=""),width=width,height=height,units=units,res=res,bg=bg,...)}  #7 inch = 17.78   
+
+trim <- function (x) gsub("^\\s+|\\s+$", "", x)
+sample.vec <- function(x, ...) x[sample(length(x), ...)]
+
+```
+
+# Run grid / ensemble of models {.tabset}
+
+## Set up template for grid
+
+First thing to do is to ensure that the file "gridTemplate" contains the TEMPLATEdata.ss and TEMPLATEcontrol.ss files. These files need to contain all the parameters that are to be used in the grid.
+
+Parameters are added like this: # xxx "param_name" followed by the parameter.
+
+Input the parameters to test in the same format as the regular parameters.
+
+This time I have created the template manually as it was easier. There may be a way to automate this, but I haven't explored that this year.
+
+Once that is done, edit the R file "makeGrid" to ensure the correct parameters are included in the grid runs.
+
+** MANUALLY CHECK THE FILES as they are a PAIN IN THE BUTT ** 
+
+MAKE SURE THERE ARE NO -9999 TERMINATORS CAUSING ISSUES in the Gnew files - edit to remove. KEEP in the GCAAL files. THIS WAS THE PROBLEM WITH THE Gnew issues.
+
+Then, run the below code.
+
+```{r template}
+
+## 
+
+source(paste0(PATH_GRID, "makeGrid.f.r", sep=""))
+
+# gridList = makeGrid.IO(path = PATH_GRID,makeGrid = T,m.val="io") ## Make all the folders / files for grid
+gridList = makeGrid.SWO(path = PATH_GRID,makeGrid = T, m.val="swo") ## Make all the folders / files for grid
+
+
+```
+
+## NOW RUN THE BATCH PROCESS FROM THE TERMINAL BEFORE MOVING ON TO THE NEXT SCRIPT.
+
+This can done by closing this R script, opening the terminal, and typing:
+"cd "C:\Users\gphillips\Documents\4_gridrun\""
+
+Then type .\gridRun.bat.
+
+```{r run_bat}
+# # Define the path to your batch file
+# batch_file_path <- paste0(PATH_GRID, "gridRun.bat", sep="")
+# 
+# # Run the batch file using system()
+# # intern = TRUE captures the output as a character vector in R
+# # show.output.on.console = TRUE displays the output in the R console
+# system(batch_file_path, intern = TRUE, show.output.on.console = TRUE)
+
+
+
+```
+
+
+```{r run_after}
+
+INPUT_KOBE_OBJECT=list();
+INPUT_KOBE_OBJECT[["2026"]] = list()
+INPUT_KOBE_OBJECT[["2026"]][['SWO']] = list()
+
+boost = function(results,n) {
+	b = cbind(rnorm(n,results['SSB0','Value'],results['SSB0','StdDev']),
+			rnorm(n,results['SSBMSY','Value'],results['SSBMSY','StdDev']),			
+			rnorm(n,results['SSBY','Value'],results['SSBY','StdDev']),
+			rnorm(n,results['SSBYoSSB0','Value'],0),
+			rnorm(n,results['SSBYoSSBMSY','Value'],0),			
+			rnorm(n,results['FMSY','Value'],results['FMSY','StdDev']),			
+			rnorm(n,results['FY','Value'],0),				
+			rnorm(n,results['FYoFMSY','Value'],results['FYoFMSY','StdDev']),
+			rnorm(n,results['CMSY','Value'],results['CMSY','StdDev']))
+
+} 
+
+#########################
+# 2025 
+#########################
+
+for (GridName in c('SWO')) {
+  if(GridName == 'SWO') models = makeGrid.SWO (path = NULL,makeGrid =F, m.val="SWO")
+  
+  n <- 300
+  estimate = rbind()
+  boot = rbind()
+  mvn = rbind()
+  ssb.ts = rbind()   # NEW
+
+  for (m in models ) {
+    
+    out <- SS_output(dir= paste0(PATH_GRID,m),covar=TRUE,forecast=FALSE)
+    results=get.mpd.kobe(out$derived_quants,current_year = 2024)
+    results = ifelse(is.na(results),0,results)
+    estimate = rbind(estimate,results[,'Value'])
+    set.seed(1)
+    b = boost(results,n)
+    v = get.mpd.kobe.MVN(out$derived_quants,out$CoVar,current_year = 2024,n=n)
+    boot = rbind(boot,b)
+    mvn = rbind(mvn,v)
+    
+    ## NEW: pull SSB_1950...SSB_2024
+    labels <- paste0("SSB_", 1950:2024)
+    dq <- out$derived_quants[match(labels, out$derived_quants$Label), ]
+    ssb.ts <- rbind(ssb.ts, dq$Value)
+    
+  }
+  rownames(estimate) = c(models)
+  colnames(boot)= c('SSB0','SSBMSY','SSBY','SSBYoSSB0','SSBYoSSBMSY','FMSY','FY','FYoFMSY','CMSY')
+  rownames(boot)= rep(models,each=n)
+  colnames(mvn)= c('SSBYoSSBMSY','FYoFMSY')
+  rownames(mvn)= rep(models,each=n)
+  
+  colnames(ssb.ts) = labels        # NEW
+  rownames(ssb.ts) = models        # NEW
+  
+  INPUT_KOBE_OBJECT[['2026']][[GridName]][['estimate']] = estimate
+  INPUT_KOBE_OBJECT[['2026']][[GridName]][['boot']] = boot
+  INPUT_KOBE_OBJECT[['2026']][[GridName]][['mvn']] = mvn
+  INPUT_KOBE_OBJECT[['2026']][[GridName]][['ssb_ts']] = ssb.ts   # NEW
+
+  ## NEW: median + CI per year, across grid models
+  ssb.ts.summary = data.frame(
+    Year   = 1950:2024,
+    Median = apply(ssb.ts, 2, median, na.rm=TRUE),
+    Lower  = apply(ssb.ts, 2, quantile, probs=0.025, na.rm=TRUE),
+    Upper  = apply(ssb.ts, 2, quantile, probs=0.975, na.rm=TRUE)
+  )
+  INPUT_KOBE_OBJECT[['2026']][[GridName]][['ssb_ts_summary']] = ssb.ts.summary
+}
+
+
+
+
+
+for (GridName in c('SWO')) {
+  if(GridName == 'SWO') models = makeGrid.SWO (path = NULL,makeGrid =F, m.val="SWO")
+  
+  n <- 300
+  estimate = rbind()
+  boot = rbind()
+  mvn = rbind()
+  
+  for (m in models ) {
+    
+    out <- SS_output(dir= paste0(PATH_GRID,m),covar=TRUE,forecast=FALSE)
+    results=get.mpd.kobe(out$derived_quants,current_year = 2024)
+    results = ifelse(is.na(results),0,results)
+    estimate = rbind(estimate,results[,'Value'])
+    set.seed(1)
+    b = boost(results,n)
+    v = get.mpd.kobe.MVN(out$derived_quants,out$CoVar,current_year = 2024,n=n)
+    boot = rbind(boot,b)
+    mvn = rbind(mvn,v)
+    
+  }
+  rownames(estimate) = c(models)
+  colnames(boot)= c('SSB0','SSBMSY','SSBY','SSBYoSSB0','SSBYoSSBMSY','FMSY','FY','FYoFMSY','CMSY')
+  rownames(boot)= rep(models,each=n)
+  colnames(mvn)= c('SSBYoSSBMSY','FYoFMSY')
+  rownames(mvn)= rep(models,each=n)
+  INPUT_KOBE_OBJECT[['2026']][[GridName]][['estimate']] = estimate
+  INPUT_KOBE_OBJECT[['2026']][[GridName]][['boot']] = boot
+  INPUT_KOBE_OBJECT[['2026']][[GridName]][['mvn']] = mvn
+}
+
+save(list='INPUT_KOBE_OBJECT',file='8a_INPUT_KOBE_OBJECT.object')
+```
+
+```{r run_after2}
+
+figure_name = "8b_kobe_noTW_updatedESP"
+library(r4ss)
+library(mvtnorm)
+
+
+plot.management.quantities <- function(der,catch) {
+	# SSB/SSBTGT
+	tstep = 1950:2024
+	dat = der[paste0("Bratio_",tstep),]
+	# tstep = 1952 + (tstep - 101)/4 + 1/8	
+	Value = tapply(dat[,c('Value')], trunc(tstep),mean)
+	StdDev = tapply(dat[,c('StdDev')],  trunc(tstep),mean)
+	tstep =  tapply(trunc(tstep), trunc(tstep),unique)
+	lci <- (Value - 1.96*StdDev)
+	uci <- (Value + 1.96*StdDev)
+	plot(tstep, Value, ylab="SSB/SSBMSY", ylim=c(0,Max(uci)), type="l", lwd=2, col="black", xlab="Year")
+	polygon(c(tstep, rev(tstep)), c(lci,rev(uci)), col="grey", border=NA)
+	lines(tstep, Value, col="black", lwd=2)
+	abline(h=1,lty=3)
+	abline(v=2024, col="red", lwd=1.5)
+	mtext("SSB/SSBMSY",line=0.15,cex=1.2)
+	# F/FTGT
+	# F/FTGT
+	tstep = tstep
+	dat = der[paste0("F_",tstep),]
+	# tstep = 1952 + (tstep - 101)/4 + 1/8		
+	Value = tapply(dat[,c('Value')], trunc(tstep),mean)
+	StdDev = tapply(dat[,c('StdDev')],  trunc(tstep),mean)
+	tstep =  tapply(trunc(tstep), trunc(tstep),unique)
+	lci <- (Value - 1.96*StdDev)
+	uci <- (Value + 1.96*StdDev)
+	
+	FmsyValue = der['annF_MSY','Value']
+	FmsyStdDev = der['F_MSY','StdDev']
+	Fmsy_lci <- (FmsyValue - 1.96*FmsyStdDev)
+	Fmsy_uci <- (FmsyValue + 1.96*FmsyStdDev)
+	
+	plot(tstep, Value, ylab="F/FMSY", ylim=c(0,Max(uci,Fmsy_uci)), type="n", lwd=2, col="black", xlab="Year")
+	rect(tstep[1], Fmsy_lci, tstep[length(tstep)], Fmsy_uci, col="lightgray", border=NA)
+	lines(x=c(tstep[1],tstep[length(tstep)]), y=c(FmsyValue,FmsyValue), lty="dashed", col="black", lwd=1.5)
+	polygon(c(tstep, rev(tstep)), c(lci,rev(uci)), col="grey", border=NA)
+	lines(tstep, Value, col="black", lwd=2)
+	abline(v=2024, col="red", lwd=1.5)
+	mtext("F/FMSY",line=0.15,cex=1.2)
+	# SSB/SSB0
+	tstep = tstep
+	dat = der[paste0("SSB_",tstep),]
+	# tstep = 1952 + (tstep - 101)/4 + 1/8		
+	Value = tapply(dat[,c('Value')], trunc(tstep),mean)
+	StdDev = tapply(dat[,c('StdDev')],  trunc(tstep),mean)
+	Value = Value/out$derived_quants['SSB_Virgin','Value']
+	StdDev = StdDev/out$derived_quants['SSB_Virgin','Value']
+	tstep =  tapply(trunc(tstep), trunc(tstep),unique)
+	lci <- (Value - 1.96*StdDev)
+	uci <- (Value + 1.96*StdDev)
+	plot(tstep, Value, ylab="SSB/SSB0", ylim=c(0,Max(uci)), type="l", lwd=2, col="black", xlab="Year")
+	polygon(c(tstep, rev(tstep)), c(lci,rev(uci)), col="grey", border=NA)
+	lines(tstep, Value, col="black", lwd=2)
+	abline(h=c(1,0.4),lty=3)
+	abline(v=2024, col="red", lwd=1.5)
+	mtext("SSB/SSB0",line=0.15,cex=1.2)
+	# Catch
+	Value = der['Ret_Catch_MSY','Value'] 
+	StdDev = der['Ret_Catch_MSY','StdDev'] 
+	lci <- (Value - 1.96*StdDev) 
+	uci <- (Value + 1.96*StdDev)
+	catch=catch[catch$year>=1950,]
+	tstep = catch$year
+	Cseries = tapply(catch$catch, tstep,sum)
+	tstep =  as.numeric(unique(names(Cseries)))
+	plot(x=tstep,Cseries,type="n",ylim=c(0,Max(Cseries,uci)), bty="n", main=paste("Catch"), ylab="Catch in t", xlab="Year")
+	rect(tstep[1],lci,tstep[length(tstep)],uci,col="lightgray", border=NA)
+	lines(x=c(tstep[1],tstep[length(tstep)]),y=c(Value,Value),lty="dashed", col="black", lwd=1.5)
+	lines(x=tstep, y=Cseries, lwd=2)
+	abline(v=2024, col="red", lwd=1.5)
+	box()
+}
+
+
+plot.kobe <- function(Kobe,der,mvn) {
+  dat = Kobe
+	dat[,2] <- as.numeric(dat[,2])
+	dat[,3] <- as.numeric(dat[,3])
+	dat <- dat[dat$Yr <= 2024,]
+	dat2 <- aggregate.data.frame(dat[,2:3], list(dat$Yr), mean)
+	ylim=2.2;xlim=4.5
+	plot(c(0,0), c(0,0), ylim=c(0,2.2), xlim=c(0,4.5), type="n", ylab="", xlab="")
+	polygon(c(0,1,1,0,0), c(1,1,ylim,ylim,1), col="red")
+	polygon(c(1,xlim,xlim,1,1), c(1,1,ylim,ylim,1), col="orange")
+	polygon(c(1,xlim,xlim,1,1), c(0,0,1,1,0), col="green")
+	polygon(c(0,1,1,0,0), c(0,0,1,1,0), col="yellow")
+	lines(c(0,xlim), rep(1,2), lwd=6)
+	lines(c(1,1), c(0,ylim), lwd=6)
+	mtext(side =1, at=1, "SSB=SSBmsy", line=2.5, cex=1)
+	mtext(side =1, at=0.25, "SSB<SSBmsy", line=2.5, cex=1)
+	mtext(side =1, at=2, "SSB>SSBmsy", line=2.5, cex=1)
+	mtext(side =1, "SSB/SSBmsy", line=4, cex=1.5)
+	mtext(side =2, at=1, "F=Fmsy", line=2.5, cex=1)
+	mtext(side =2, at=0.35, "F<Fmsy", line=2.5, cex=1)
+	mtext(side =2, at=1.8, "F>Fmsy", line=2.5, cex=1)
+	mtext(side =2, "F/Fmsy", line=4, cex=1.5)
+	mtext(side=4, at= 1.4, "Overfishing", line=0.5, cex=1.2)
+	mtext(side=3, at= 0.4, "Overfished", line=0.5, cex=1.2)
+	points(mvn[,1],mvn[,2], pch=16, col='gray', cex=1)
+	
+	years <- dat2[,1]
+	Brat <- dat2[,2]
+	times <- years
+	Frat <- dat2[,3]
+	cols <- hsv(0.75,1:length(years)/length(years),0.8,1)
+	points(Brat, Frat, col=cols, pch=16, cex=2.5)
+	for ( i in 1:(length(years)-1)){
+		arrows(Brat[i], Frat[i], Brat[i+1], Frat[i+1], angle=15, length=0.12)
+	}
+	labels <- c(1950+1:6*10,2024)
+	a <- match(labels,years)
+	for(i in a){
+		text(Brat[i],Frat[i], as.character(years[i]), cex=1, col="white")
+	}
+	#lines(c(0.4,0.4), c(0,1.4), lty=3, lwd=3)
+	#lines(c(0.4,3.5), c(1.4,1.4), lty=3, lwd=3)
+	value = der[c('Bratio_2024'),'Value']
+	stdev = der[c('Bratio_2024'),'StdDev'] 
+	SSBci2024 <- c(mean(value-1.96*stdev),mean(value+1.96*stdev))
+	value = der[c('F_2024'),'Value']
+	stdev = der[c('F_2024'),'StdDev'] 
+	Fci2024 <- c(mean(value-1.96*stdev),mean(value+1.96*stdev))
+	SSB2024 <- Brat[i]
+	F2024 <- Frat[i]
+	lines(rep(SSB2024,2), Fci2024, col="slate gray", lwd=4)
+	lines(SSBci2024, rep(F2024,2),col="slate gray", lwd=4) 
+	points(SSB2024,F2024, pch=16, col="slate gray", cex=2.5)
+	for(i in a){
+		text(Brat[i],Frat[i], as.character(years[i]), cex=1, col="white")
+	}	
+}
+
+attach('8a_INPUT_KOBE_OBJECT.object')
+
+
+
+
+################################
+# 2025
+################################
+
+BASE_2026 <- "4_update_rec"
+
+# basic
+out <- SS_output(paste0(PATH_MODELRUNS, BASE_2026, sep="")) #BASE MODEL 2026
+dat=SS_readdat(paste0(PATH_MODELRUNS, BASE_2026,"/data.ss", sep=""))
+savepng(paste0(BASE_2026,'___StockTrajectory_noESP.png',sep=""),width = 30,height=25)
+par(mfrow=c(2,2), mar=c(4,4,2,1))  
+plot.management.quantities(out$derived_quants,dat$catch)
+dev.off()
+    
+# Kobe
+out <- out  ##SS_output(paste0(PATH_MODELRUNS, BASE_2025a, sep="")) #BASE MODEL 2025
+savepng(paste0(BASE_2026,'___Kobe basic_noESP.png',sep=""),width = 20,height=20)
+par(mfrow=c(1,1),mar=c(7,6,2,3))
+plot.kobe(out$Kobe,out$derived_quants,mvn=mvn)
+dev.off()
+	
+Kobe = data.frame(Year = 1950:2024,BoBMSY = c(out$derived_quants['SSB_1950','Value']/out$derived_quants['SSB_MSY','Value'],out$derived_quants[paste0('Bratio_',1951:2024),'Value']),
+								FoFMSY= out$derived_quants[paste0('F_',1950:2024),'Value'])
+
+
+################################
+# 2026 gridIO & gridSpatio
+################################
+
+est = rbind(INPUT_KOBE_OBJECT[['2026']][['SWO']][['estimate']])
+boo = rbind(INPUT_KOBE_OBJECT[['2026']][['SWO']][['boot']])
+mvn = rbind(INPUT_KOBE_OBJECT[['2026']][['SWO']][['mvn']])
+
+
+
+# Kobe all models
+savepng('Kobe SWO_noTW___noESP.png',width = 20,height=20)
+par(mar=c(7,6,2,3))
+plot(c(0,0), c(0,0), ylim=c(0,2), xlim=c(0,3), type="n", ylab="", xlab="")
+polygon(c(0,1,1,0,0), c(1,1,3,3,1), col="red")
+polygon(c(1,3.,3.,1,1), c(1,1,3,3,1), col="orange")
+polygon(c(1,3.,3.,1,1), c(0,0,1,1,0), col="green")
+polygon(c(0,1,1,0,0), c(0,0,1,1,0), col="yellow")
+lines(c(0,3.5), rep(1,2), lwd=6)
+lines(c(1,1), c(0,2.5), lwd=6)
+mtext(side =1, at=1, "SB=SBmsy", line=2.5, cex=1)
+mtext(side =1, at=0.25, "SB<SBmsy", line=2.5, cex=1)
+mtext(side =1, at=2, "SB>SBmsy", line=2.5, cex=1)
+mtext(side =1, "SB/SBmsy", line=4, cex=1.5)
+mtext(side =2, at=1, "F=Fmsy", line=2.5, cex=1)
+mtext(side =2, at=0.35, "F<Fmsy", line=2.5, cex=1)
+mtext(side =2, at=1.8, "F>Fmsy", line=2.5, cex=1)
+mtext(side =2, "F/Fmsy", line=4, cex=1.5)
+mtext(side=4, at= 1.4, "Overfishing", line=0.5, cex=1.2)
+mtext(side=3, at= 0.4, "Overfished", line=0.5, cex=1.2)
+lines(c(0.4,0.4), c(0,1.4), lty=3, lwd=3)
+lines(c(0.4,3.5), c(1.4,1.4), lty=3, lwd=3)
+dat = Kobe
+dat[,2] <- as.numeric(dat[,2])
+dat[,3] <- as.numeric(dat[,3])
+dat <- aggregate.data.frame(dat[,2:3], list(dat$Year), mean)
+years <- dat[,1]
+Brat <- dat[,2]
+Frat <- dat[,3]
+cols <- hsv(0.75,1:length(years)/length(years),0.8,1)
+points(Brat, Frat, col=cols, pch=16, cex=2)
+for ( i in 1:(length(years)-1)) arrows(Brat[i], Frat[i], Brat[i+1], Frat[i+1], angle=15, length=0.12)
+labels <- c(1950+1:14*5)
+a <- match(labels,years)
+for(i in a) text(Brat[i],Frat[i], as.character(years[i]), cex=1, col="white")
+points(mvn[,1],mvn[,2], pch=16, col='gray', cex=1)
+points(est[,5],est[,8], col=c('black'),pch=c(17), cex=2)
+# points(est['io4_cj_h80_GoMf_r2_CL020',5],est['io4_cj_h80_GoMf_r2_CL020',8],col='purple',pch=16,cex=2)
+dev.off()
+
+
+# mvnt approximation across all models
+kb = cbind(est[,c(5,8)],weight=1)
+Label=rownames(kb)
+cols = rainbow(length(Label))
+harvest.label = "Fmsy"
+KOBE.type = "IOTC"
+pchs = rep(21:24,10)
+status = data.frame(stock=rep(kb[,1],kb[,3]),harvest=rep(kb[,2],kb[,3]))
+log.mu = apply(log(status),2,median) # log mean of B/Bsmy and F/Fmsy
+log.cov = cov(log(status)) # covariance matrix
+MVN_posterior = exp(rmvnorm(20000 ,mean = log.mu,sigma = log.cov)) # random  MVN generator
+
+
+
+savepng("Kobe SWO MVN noTW __noESP.png", width = 26, height = 24)  # taller canvas, same width as before
+
+par(list(mar = c(3.5, 3.5, 0.1, 14), mgp = c(2., 0.5, 0), tck = -0.02, cex = 0.8))  # right margin unchanged
+
+plot(1000, 1000, type = "b",
+     xlim = c(0, max(6)), ylim = c(0, max(2)), lty = 3,
+     ylab = ifelse(harvest.label == "Fmsy",
+                    expression(paste(F/F[MSY])),
+                    expression(paste(H/H[MSY]))),
+     xlab = expression(paste(B/B[MSY])),
+     xaxs = "i", yaxs = "i")
+
+c1 <- c(-1,100)
+c2 <- c(1,1)
+zb2 = c(0,1)
+zf2  = c(1,100)
+zb1 = c(1,100)
+zf1  = c(0,1)
+
+polygon(c(zb1,rev(zb1)),c(0,0,1,1),col="green",border=0)
+polygon(c(zb2,rev(zb2)),c(0,0,1,1),col="yellow",border=0)
+polygon(c(1,100,100,1),c(1,1,100,100),col=ifelse(KOBE.type=="ICCAT","yellow","orange"),border=0)
+polygon(c(0,1,1,0),c(1,1,100,100),col="red",border=0)
+
+points(MVN_posterior,bg=grey(0.8,1),pch=21)
+points(status$stock,status$harvest,col=1,pch=pchs,bg=cols,cex=2)
+lines(c1,c2,lty=3,lwd=0.7)
+lines(c2,c1,lty=3,lwd=0.7)
+
+par(xpd = TRUE)
+legend(6.02, 2, paste(Label), bty = "n", cex = 0.7,
+       pch = pchs, pt.bg = cols, col = 1, pt.cex = 1.2)
+par(xpd = FALSE)
+
+b = MVN_posterior[,1]; f = MVN_posterior[,2]
+Pr.green = sum(ifelse(b>1 & f<1,1,0))/length(b)*100
+Pr.red = sum(ifelse(b<1 & f>1,1,0))/length(b)*100
+if(KOBE.type=="ICCAT"){
+  Pr.yellow = (sum(ifelse(b<1 & f<1,1,0))+sum(ifelse(b>1 & f>1,1,0)))/length(b)*100
+} else {
+  Pr.yellow = sum(ifelse(b<1 & f<1,1,0))/length(b)*100
+  Pr.orange = sum(ifelse(b>1 & f>1,1,0))/length(b)*100
+}
+
+legend("topleft", paste0(round(c(Pr.red,Pr.yellow,Pr.orange,Pr.green),1),"%"),
+       lty = c(rep(-1,3)), pch = c(rep(22,3)),
+       pt.bg = c("red","yellow","orange","green"), col = 1, lwd = 1.1, cex = 0.7,
+       pt.cex = c(rep(2.1,3)), bty = 1, x.intersp = 0.2, y.intersp = 1.4)
+
+dev.off()
+
+# all models table
+SSB0 = mean(boo[,1])
+SSB0lci = SSB0 - 1.28*sd(boo[,1])
+SSB0uci = SSB0 + 1.28*sd(boo[,1])
+
+SSBMSY = mean(boo[,2])
+SSBMSYlci = SSBMSY - 1.28*sd(boo[,2])
+SSBMSYuci = SSBMSY + 1.28*sd(boo[,2])
+
+SSB2024 = mean(boo[,3])
+SSB2024lci = SSB2024 - 1.28*sd(boo[,3])
+SSB2024uci = SSB2024 + 1.28*sd(boo[,3])
+
+SSB2024SSB0 = mean(boo[,4])
+SSB2024SSB0lci = SSB2024SSB0 - 1.28*sd(boo[,4])
+SSB2024SSB0uci = SSB2024SSB0 + 1.28*sd(boo[,4])
+
+SSB2024SSBMSY = mean(boo[,5])
+SSB2024SSBMSYlci = SSB2024SSBMSY - 1.28*sd(boo[,5])
+SSB2024SSBMSYuci = SSB2024SSBMSY + 1.28*sd(boo[,5])
+
+MSY = mean(boo[,9])
+MSYlci = MSY - 1.28*sd(boo[,9])
+MSYuci = MSY + 1.28*sd(boo[,9])
+
+FMSY = mean(boo[,6])
+FMSYlci = FMSY - 1.28*sd(boo[,6])
+FMSYuci = FMSY + 1.28*sd(boo[,6])
+
+F2024FMSY = mean(boo[,8])
+F2024FMSYlci = F2024FMSY - 1.28*sd(boo[,8])
+F2024FMSYuci = F2024FMSY + 1.28*sd(boo[,8])
+
+CMSY = mean(boo[,9])
+CMSYlci = CMSY - 1.28*sd(boo[,9])
+CMSYuci = CMSY + 1.28*sd(boo[,9])
+
+
+
+sum(mvn[,1]>1 & mvn[,2]<1)/nrow(mvn) # green
+sum(mvn[,1]>1 & mvn[,2]>1)/nrow(mvn) # orange
+sum(mvn[,1]<1 & mvn[,2]<1)/nrow(mvn) # yellow
+sum(mvn[,1]<1 & mvn[,2]>1)/nrow(mvn) # red
+
+
+```
+
+## Table i: STOCK STATUS INDICATORS FROM MODEL ENSEMBLE
+
+```{r table_i}
+
+catch <- read.csv2(file = paste0(PATH_SS3_INPUT,"SS3catch2026.csv"), header = TRUE, sep = ",")
+
+catch = as.data.frame(catch)
+
+catch1 <- catch %>%
+  select(-X) %>%
+  mutate(Catch = as.numeric(Catch)) %>%
+  filter(Year > 1949) %>%
+  mutate(Year = as.factor(Year)) %>%
+  dplyr::group_by(Year) %>%
+  dplyr::summarise(catch_tot = sum(Catch))
+
+##Table i: STOCK STATUS INDICATORS FROM MODEL ENSEMBLE
+catch2024 <- catch1 %>% filter(Year == 2024)
+mean_5yrs <- catch1 %>% filter(Year %in% c(2020,2024,2022,2023,2024)) %>% mutate(mean = mean(catch_tot)) 
+last_3_yrs <- catch1 %>% filter(Year %in% c(2022,2023,2024)) %>% mutate(mean = mean(catch_tot))
+
+`Catch in 2024` <- round(catch2024[2],0)
+`Average catch 2020-2024` <- round(mean_5yrs$mean[1],0)
+`Catch MSY (1000 t)` <- paste0(round(CMSY/1000, 0),"(", round(CMSYlci/1000,0), "-", round(CMSYuci/1000,0), ")", sep = "")
+Fmsy <- paste0(round(FMSY,2), "(", round(FMSYlci,2), "-", round(FMSYuci,2), ")", sep="")
+`SSB0 (1000 t)` <- paste0(round(SSB0/1000, 0),"(", round(SSB0lci/1000,0), "-", round(SSB0uci/1000,0), ")", sep = "")
+`SSB2024 (1000 t)` <- paste0(round(SSB2024/1000, 0),"(", round(SSB2024lci/1000,0), "-", round(SSB2024uci/1000,0), ")", sep = "")
+`SSBMSY (1000 t)` <- paste0(round(SSBMSY/1000,0), "(", round(SSBMSYlci/1000,0), "-", round(SSBMSYuci/1000,0), ")", sep="")
+`SSB2024/SSB0 (80% CI)` <- paste0(round(SSB2024SSB0,2), "(", round(SSB2024SSB0lci, 2), "-", round(SSB2024SSB0uci, 2), ")", sep="")
+`SSB2024/SSBMSY` <- paste0(round(SSB2024SSBMSY,2), "(", round(SSB2024SSBMSYlci, 2), "-", round(SSB2024SSBMSYuci, 2), ")", sep="")
+`F2024/FMSY` <- paste0(round(F2024FMSY,2), "(", round(F2024FMSYlci,2), "-", round(F2024FMSYuci, 2), ")", sep="")
+
+tablei <- rbind(`Catch in 2024`, `Average catch 2020-2024`, `Catch MSY (1000 t)`, Fmsy, `SSB0 (1000 t)`, `SSB2024 (1000 t)`, `SSBMSY (1000 t)`,
+                `SSB2024/SSB0 (80% CI)`, `SSB2024/SSBMSY`, `F2024/FMSY`)
+
+names<- rbind("Catch in 2024 (t)","Average catch 2020-2024", "Catch MSY (1000 t)", "FMSY","SSB0 (1000 t)", "SSB2024 (1000 t)", "SSBMSY (1000 t)",
+              "SSB2024/SSB0 (80% CI)"  ,"SSB2024/SSBMSY", "F2024/FMSY")
+tablei <- cbind(names, tablei)
+
+knitr::kable(tablei)
+
+```
+
+## Exceptional Circumstances data
+
+```{r yearly_SSB}
+
+yearly_SSB <- INPUT_KOBE_OBJECT$`2026`$SWO$ssb_ts_summary
+
+write.csv(yearly_SSB, file =paste0(PATH_GRID,"grid_SSB_output_esp.csv")) # in data.ss file
+
+
+
+
+```
+
