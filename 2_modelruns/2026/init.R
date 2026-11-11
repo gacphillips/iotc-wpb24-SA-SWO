@@ -10,7 +10,7 @@ library(tidyr)
 library(RColorBrewer)
 # library(reshape)
 
-PATH <- "C:/Users/gphillips/OneDrive - Food and Agriculture Organization/Documents/Assessments/2026/SWO/SS3/"
+PATH <- "C:/Users/gphillips/OneDrive - Food and Agriculture Organization/Documents/Assessments/2026/SWO/SS3-git/"
 PATH_DATA = paste(PATH,"data/",sep="")
 PATH_DATAPREP = paste(PATH,"1_dataprep/",sep="") ##PATH_R (R)
 PATH_MODELRUNS = paste(PATH,"2_modelruns/2026/",sep="") ##PATH_SS3 
