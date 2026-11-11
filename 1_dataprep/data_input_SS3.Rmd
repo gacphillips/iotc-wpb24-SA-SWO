@@ -209,59 +209,13 @@ ModelFisheries =c('ALGI NW', 'JPLL NW','TWLL NW','ALGI NE','JPLL NE','TWLL NE','
 
 ```{r read_CE_data}
 
-# Data_23 <- read.csv(file = paste0(PATH_DATA, "CE/2023/", "SA_SWO_WPB21_SS3.csv", sep=""), header=TRUE)
-
-# Data <- read_xlsx(path = paste0(PATH_DATA, "CE/","IOTC-DATASETS-2026-02-03-SF-SWO-1970-2024.xlsx"), sheet = 'DATA')
 orig.dat <- read.csv(file = paste0(PATH_DATA, "CE/2026/", "iotc_swordfish_raised_catch_dataset_base_case.csv", sep=""), header=TRUE)
 
-# summary(as.factor(Data_23$FISHERY)) ##check for the space problem
-summary(as.factor(orig.dat$FLEET_CODE))
-wtf <- orig.dat %>% filter(FLEET_CODE == "BLZ")
-View(wtf)
-summary(as.factor(wtf$FISHERY_CODE))
-summary(as.factor(wtf$SA_AREA_CODE))
-
-# dHelper <- read_excel(make.filename(file = "IOTC-2022-WPTT24(AS)-DATA14-SA_SWO_02-SS3.xlsx", path=paste0(PATH_DATA, "CE/")), sheet='AllocFI')
-
-# dHelper <- read.csv(file = paste0(PATH_DATA, "CE/2026/", "SWO_SA_FISHERY_MAPPING.csv", sep=""), header=TRUE, sep = ";")
-
-dHelper <- read_excel(make.filename(file = "IOTC-DATASETS-2026-02-03-SF-SWO-1970-2024.xlsx", path=paste0(PATH_DATA, "CE/2026/")), sheet='mappings')
-
+dHelper <- read_excel(make.filename(file = "IOTC-DATASETS-2026-02-03-SF-SWO-1970-2024.xlsx", path=paste0(PATH_DATA, "CE/2026/")), sheet='mappings') ## this spreadsheet allocates data to model fleets
 
 ```
 
-
 ### Reformat for SS3 input.
-
-```{r reformat_data}
-
-Data <- orig.dat %>%
-  mutate(Catch = as.numeric(CATCH),Fishing_Ground_Code=as.character(FISHING_GROUND_CODE),Quarter = floor((MONTH-1)/3) + 1) %>%
-  rename(Fleet = FLEET_CODE, Gear = GEAR_CODE, SchoolType = CATCH_SCHOOL_TYPE_CODE, Year = YEAR, AssessmentArea = SA_AREA_CODE, Month = MONTH, Grid = FISHING_GROUND_CODE) %>%
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_NORTHEAST'),'NE'))  %>%
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_NORTHWEST'),'NW'))  %>%
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_OTHER'),'SE'))  %>%
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTH_SOUTHEAST'),'SE')) %>%
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTH_SOUTHWEST'),'SW')) %>%
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTHEAST'),'SE')) %>%
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTHWEST'),'SW')) %>%
-  filter(FISHERY_CODE != "PSFS" & FISHERY_CODE != "PSLS") %>%
-  left_join(dHelper, by=c("Fleet"="FLEET", "Gear"="GEAR_CODE","SchoolType"="SCHOOL_TYPE_CODE")) %>%
-  rename(FisheryGroup = FISHERY, Fishery = FISHERY_CODE) %>%
-  select(Fleet,Gear,SchoolType,Fishery,FisheryGroup,Year,Quarter,Month,AssessmentArea,Grid,Catch) %>%
-  dplyr::mutate(Grid=as.character(Grid),Fleet=trim(Fleet))
-
-
-wtf <- Data %>%
-  group_by(Fleet, Gear, SchoolType, Fishery, FisheryGroup) %>%
-  filter(is.na(Fishery)) %>%
-  summarise(n = sum(Catch))
-# 
-# View(wtf)
-# 
-# write.csv(wtf, file=paste0(PATH_DATA, "CE/2026/", "additional_fleets.csv", sep=""))
-
-## ADD FLEETS TO THE CE HELPER FILE
 
 # ALGI	Gillnet, trolling and other minor artisanal fisheries
 # AUEL	Longline fishery of Australia (target is SWO)
@@ -271,56 +225,59 @@ wtf <- Data %>%
 # TWFL	Fresh-tuna longline fleets of Taiwan and Indonesia, plus other fresh-tuna longline fleets assimilated to those
 # TWLL	Large scale tuna longline fleet of Taiwan,China, plus other longline fleets assimilated to the Taiwanese fleet
 
+
+```{r reformat_data}
+
+Data <- orig.dat %>%
+  mutate(Catch = as.numeric(CATCH),Fishing_Ground_Code=as.character(FISHING_GROUND_CODE),Quarter = floor((MONTH-1)/3) + 1) %>%
+  dplyr::rename(Fleet = FLEET_CODE, Gear = GEAR_CODE, SchoolType = CATCH_SCHOOL_TYPE_CODE, Year = YEAR, AssessmentArea = SA_AREA_CODE, Month = MONTH, Grid = FISHING_GROUND_CODE) %>%
+  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_NORTHEAST'),'NE'))  %>%
+  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_NORTHWEST'),'NW'))  %>%
+  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_OTHER'),'SE'))  %>%
+  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTH_SOUTHEAST'),'SE')) %>%
+  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTH_SOUTHWEST'),'SW')) %>%
+  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTHEAST'),'SE')) %>%
+  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTHWEST'),'SW')) %>%
+  filter(FISHERY_CODE != "PSFS" & FISHERY_CODE != "PSLS") %>%
+  left_join(dHelper, by=c("Fleet"="FLEET", "Gear"="GEAR_CODE","SchoolType"="SCHOOL_TYPE_CODE")) %>%
+  dplyr::rename(FisheryGroup = FISHERY, Fishery = FISHERY_CODE) %>%
+  select(Fleet,Gear,SchoolType,Fishery,FisheryGroup,Year,Quarter,Month,AssessmentArea,Grid,Catch) %>%
+  dplyr::mutate(Grid=as.character(Grid),Fleet=trim(Fleet))
+
+
 Data <- Data %>%
-  dplyr::select(Year,Quarter,FisheryGroup,AssessmentArea,Grid,Catch) %>% 
-	dplyr::mutate(ModelArea=AssessmentArea, ModelFishery = FisheryGroup)  %>% 
-		dplyr::mutate(ModelArea = replace(ModelArea, which(FisheryGroup == 'ALGI' & ModelArea=='SW'),'NW'))  %>%
-		dplyr::mutate(ModelArea = replace(ModelArea, which(FisheryGroup == 'ALGI' & ModelArea=='SE'),'NE'))  %>%
-    dplyr::mutate(ModelArea = replace(ModelArea, which(FisheryGroup == 'AUEL' & ModelArea=='NE'),'SE'))  %>%
-		dplyr::mutate(ModelArea = replace(ModelArea, which(FisheryGroup == 'EUEL' & ModelArea=='NW'),'SW'))  %>%
-		dplyr::mutate(ModelArea = replace(ModelArea, which(FisheryGroup == 'EUEL' & ModelArea=='NE'),'SE'))  %>%
-		dplyr::mutate(ModelArea = replace(ModelArea, which(FisheryGroup == 'ISEL' & ModelArea=='NW'),'SW'))  %>%
-		dplyr::mutate(ModelArea = replace(ModelArea, which(FisheryGroup == 'ISEL' & ModelArea=='SE'),'SW'))  %>%
-		dplyr::mutate(ModelArea = replace(ModelArea, which(FisheryGroup == 'ISEL' & ModelArea=='NE'),'SW'))  %>%
-		dplyr::mutate(ModelArea = replace(ModelArea, which(FisheryGroup == 'TWFL' & ModelArea=='NW'),'NE'))  %>%
-		dplyr::mutate(ModelArea = replace(ModelArea, which(FisheryGroup == 'TWFL' & ModelArea=='SW'),'NE'))  %>%
-		dplyr::mutate(ModelArea = replace(ModelArea, which(FisheryGroup == 'TWFL' & ModelArea=='SE'),'NE'))  %>%
-		dplyr::mutate(AssessmentAreaName=AssessmentArea,ModelAreaName=ModelArea)  %>%		
-		dplyr::mutate(ModelFishery = paste(FisheryGroup,ModelAreaName,sep=' ')) %>%  
-		group_by(Year,Quarter,Grid, AssessmentArea,AssessmentAreaName,ModelArea,ModelAreaName,FisheryGroup,ModelFishery) %>% 
-		summarise(Catch = sum(Catch)) %>% 
-		as.data.frame() 
- 		                                                                                                               																												   
+  # 1. Ensure any prior groupings are removed
+  dplyr::ungroup() %>% 
+  
+  dplyr::select(Year, Quarter, FisheryGroup, AssessmentArea, Grid, Catch) %>% 
+  
+  # 2. Safely handle conditional logic using case_when
+  dplyr::mutate(
+    ModelArea = case_when(
+      FisheryGroup == 'ALGI' & AssessmentArea == 'SW' ~ 'NW',
+      FisheryGroup == 'ALGI' & AssessmentArea == 'SE' ~ 'NE',
+      FisheryGroup == 'AUEL' & AssessmentArea == 'NE' ~ 'SE',
+      FisheryGroup == 'EUEL' & AssessmentArea == 'NW' ~ 'SW',
+      FisheryGroup == 'EUEL' & AssessmentArea == 'NE' ~ 'SE',
+      FisheryGroup == 'ISEL' & AssessmentArea %in% c('NW', 'SE', 'NE') ~ 'SW',
+      FisheryGroup == 'TWFL' & AssessmentArea %in% c('NW', 'SW', 'SE') ~ 'NE',
+      TRUE ~ AssessmentArea # Keeps original value if no conditions match
+    ),
+    ModelFishery = FisheryGroup,
+    AssessmentAreaName = AssessmentArea,
+    ModelAreaName = ModelArea,
+    ModelFishery = paste(FisheryGroup, ModelAreaName, sep = ' ')
+  ) %>%
+  
+  # 3. Group and Summarize
+  dplyr::group_by(Year, Quarter, Grid, AssessmentArea, AssessmentAreaName, 
+                  ModelArea, ModelAreaName, FisheryGroup, ModelFishery) %>%
+  dplyr::summarise(Catch = sum(Catch, na.rm = TRUE), .groups = "drop") %>%
+  as.data.frame()
+                                                                                      																												   
 data = Data 
 
-area_mod_alloc <- data %>%
-  select(ModelArea, ModelFishery, Catch) %>%
-  group_by(ModelArea, ModelFishery) %>%
-  summarise(Catch = sum(Catch) , .groups = "drop") %>% 
-  mutate(FleetNumber = row_number()) %>%
-  select(FleetNumber, ModelArea, ModelFishery, Catch)
-  
 
-knitr::kable(area_mod_alloc, format = "simple")
-
-library(stringr)
-
-area_mod_alloc_yr <- data %>%
-  select(ModelFishery, Year, Catch) %>%
-  filter(Year %in% c(2020, 2021, 2022, 2023, 2024)) %>%
-  group_by(ModelFishery, Year) %>%
-  summarise(Catch = sum(Catch), .groups = "drop") %>%
-  pivot_wider(names_from = Year,
-              values_from = Catch,
-              values_fill = 0) %>%
-  mutate(suffix = str_extract(ModelFishery, "[A-Za-z]+$")) %>%
-  mutate(suffix = factor(suffix, levels = c("NW", "NE", "SW", "SE"))) %>%
-  arrange(suffix, ModelFishery) %>%
-  select(-suffix)
-
-knitr::kable(area_mod_alloc_yr)
-
-# data = Data 
 
 ```
 
@@ -328,7 +285,7 @@ knitr::kable(area_mod_alloc_yr)
 
 #### 1) Spatial extent of fishery - need grid
 
-```{r spatial_extent_plot, eval=FALSE}
+```{r spatial_extent_plot, eval=TRUE}
 
 work <- data %>%
 		filter(Year %in% c(1990:2024)) %>%
@@ -340,11 +297,9 @@ work <- data %>%
 GRID_PARAM=setup_GRID_PARAM()
 GRID = setup_GRID(GRID_PARAM)
 
-##THIS PLOT IS FUCKED.
 savepng('SWO spatial distribution.png',width=12*2.54,height=7*2.54)
 par(mar=c(5.1,4.1,4.1,8.2),xaxs="i",yaxs="i") 
 GRID.plot(GRID_PARAM,xlim=c(20,130),ylim=c(-50,30),col=NA,xaxt='n',yaxt='n')
-
 axis(1,at =seq(20,130,by=10),labels=c('20E','','40E','','60E','','80E','','100E','','120E',''),cex.axis=0.8)
 axis(2,at =seq(-40,30,by=5),labels=c('','35S','','25S','','15S','','5S','','5N','','15N','','25N',''),cex.axis=0.8)
 work$size = work$Catch/max(work$Catch)
@@ -363,37 +318,11 @@ text(125,27.5,"",cex=1.3)
 swo.regions(col='black', lwd=2, labels=TRUE, cex=2)
 dev.off()
 
-
-
-
-# savepng('SWO spatial distribution.png',width=12*2.54,height=7*2.54) ##TODO - NEED TO UPDATE GRAPHS.
-# par(mar=c(5.1,4.1,4.1,8.2),xaxs="i",yaxs="i") 
-# GRID.plot(GRID_PARAM,xlim=c(20,130),ylim=c(-50,30),col=NA,xaxt='n',yaxt='n')
-# swo.regions(col='slate grey',lwd=2,labels=F)
-# axis(1,at =seq(20,130,by=10),labels=c('20E','','40E','','60E','','80E','','100E','','120E',''),cex.axis=0.8)
-# axis(2,at =seq(-40,30,by=5),labels=c('','35S','','25S','','15S','','5S','','5N','','15N','','25N',''),cex.axis=0.8)
-# work$size = work$Catch/max(work$Catch)
-# maps::map(database='world2',add=TRUE,fill=T,col="gray") #DarkOliveGreen3
-# for(i in 1:nrow(work))
-# 	add.pie(GRID[[work[i,"Grid"]]],proportion=as.vector(unlist(work[i,c('ALGI','AUEL','EUEL','ISEL','JPLL','TWLL','TWFL')])),size=work[i,"size"],col=c("black","white","orange","gray","red","green4","blue"),scale=0.1,fg="black") #
-# par(xpd=T)
-# rect(110,7.5,140,32.5,col="white")
-# add.pie(grid = GRID[[get.id.from.lat.long(GRID_PARAM,20,125)]],size = 100000/max(work$Catch),proportion=c(1/7,1/7,1/7,1/7,1/7,1/7,1/7),col=c("black","white","orange","gray","red","green4","blue"),scale=0.1,fg="black")
-# # add.legend(x=GRID[[get.id.from.lat.long(GRID_PARAM,20,125)]]$id_long[1],y=GRID[[get.id.from.lat.long(GRID_PARAM,20,125)]]$id_lat[1],
-# 			# size=100000/max(work$Catch),scale=0.2,col=c("black","white","orange","gray","red","green4","blue"),legend=c('ALGI','AUEL','EUEL','ISEL','JPLL','TWLL','TWFL'))
-# lines(c(122.5,125,130),c(17.5,23.5,23.5))
-# text(130,23.5,"100,000 (MT)",adj=c(0,0.5))
-# text(125,30,"SWO Catch (1975-2024)",cex=1.3)
-# text(125,27.5,"",cex=1.3)
-# dev.off()
-
 ```
 
 #### 2) Catch over time
 
 ```{r plot_1}
-
-##TODO ##UPDATE WITH COLOURS
 
 # catch by FisheryGroup
 work <- data %>% 
@@ -403,7 +332,7 @@ savepng('catch by FisheryGroup.png',width=17.78,height=17.78)
 ggplot(data=work, aes(x=Year,weight=Catch/1000,group=FisheryGroup,fill=FisheryGroup)) +
 		xlab("Year") + ylab("Catch (1000 t)") + scale_x_continuous(breaks = seq(1950, 2020, by = 10)) +
 		geom_bar(colour=NA)+ ggtheme + theme(legend.position=c(0.1,0.80))+
-		scale_fill_manual(name="",values=c('ALGI'="darkorchid",'AUEL'="red",'EUEL'="goldenrod1",'ISEL'="darkorange",'JPLL'="blue",'TWLL'="dodgerblue",'TWFL'="skyblue"))
+		scale_fill_manual(name="",values=c('ALGI'="#D7E4BDFF",'AUEL'="#5B3F7A",'EUEL'="#B3A2C7FF",'ISEL'="#8E5BD6",'JPLL'="#374BE5FF",'TWLL'="#1B2575",'TWFL'="#6F82F0"))
 dev.off()
 
 
@@ -424,7 +353,7 @@ ggplot(data=work, aes(x=Year,weight=Catch/1000,group=FisheryGroup,fill=FisheryGr
 			xlab("Year") + ylab("Catch (1000 t)") + ylim(0,22)+ scale_x_continuous(breaks = seq(1950, 2030, by = 10)) +
 			facet_wrap(~ModelAreaName,nrow =2) +
 			geom_bar()+ ggtheme+theme(legend.position=c(0.1,0.80))+
-			scale_fill_manual(name="",values=c('ALGI'="darkorchid",'AUEL'="red",'EUEL'="goldenrod1",'ISEL'="darkorange",'JPLL'="blue",'TWLL'="dodgerblue",'TWFL'="skyblue"))
+			scale_fill_manual(name="",values=c('ALGI'="#D7E4BDFF",'AUEL'="#5B3F7A",'EUEL'="#B3A2C7FF",'ISEL'="#8E5BD6",'JPLL'="#374BE5FF",'TWLL'="#1B2575",'TWFL'="#6F82F0"))
 dev.off()	
 
 ```
@@ -436,27 +365,16 @@ dev.off()
 dat <- r4ss::SS_readdat(paste0(PATH_MODELRUNS, "0_base_2023/data.ss"), verbose=FALSE)
 dat <- dat$catch[dat$catch$year >0,]
 
-work <- data	%>% 
-			group_by(Year,ModelFishery) %>% 
-			summarise(Catch = sum(Catch), .groups="drop_last") %>% 
-			as.data.frame() %>%	
-			mutate(ModelFishery = factor(ModelFishery,levels=ModelFisheries)) %>% 
-			mutate(ModelFleet = as.numeric(ModelFishery),season=1) %>%
-			select(Year,season,ModelFishery,ModelFleet,Catch) %>%
-			arrange(ModelFleet,Year,season)
+work <- data %>% 
+  dplyr::group_by(Year, ModelFishery) %>%
+  # Adding .groups = "drop" prevents Year from staying grouped
+  dplyr::summarise(Catch = sum(Catch, na.rm = TRUE), .groups = "drop") %>%
+  as.data.frame() %>%
+  dplyr::mutate(ModelFishery = factor(ModelFishery, levels = ModelFisheries)) %>% 
+  dplyr::mutate(ModelFleet = as.numeric(ModelFishery), season = 1) %>%
+  dplyr::select(Year, season, ModelFishery, ModelFleet, Catch) %>%
+  dplyr::arrange(ModelFleet, Year, season)
 
-catch_fishery <- work %>%
-  filter(Year == 2024) %>%
-  group_by(Year, ModelFishery) %>%
-  summarise(Catch = sum(Catch)) %>%
-  mutate(TotCatch = sum(Catch)) %>%
-  mutate(PercCatch = (Catch/TotCatch)*100) %>%
-  arrange(PercCatch)
-
-knitr::kable(catch_fishery)
-
-wtf <- work %>% filter(is.na(ModelFishery))
-			
 savepng("catch by Fishery.png",width=25,height=25)
 par(las=0,mar=c(2.5,2.5,2,1),oma=c(3,3,1,1),mfrow=c(4,4))
 for (i in 1:15) {
@@ -480,11 +398,11 @@ dev.off()
 ```{r catch_for_SS3}
 
 work <- work	%>% 
-			group_by(Year,season,ModelFleet) %>% 
-			summarise(Catch = sum(Catch),.groups = "drop_last") %>% as.data.frame() %>%	
-      filter(Catch > 0) %>%
-			select(Year,season, ModelFleet,Catch) %>%
-			filter(Year >= 1950) %>%
+			dplyr::group_by(Year,season,ModelFleet) %>% 
+			dplyr::summarise(Catch = sum(Catch, na.rm = TRUE), .groups = "drop") %>% as.data.frame() %>%	
+      dplyr::filter(Catch > 0) %>%
+			dplyr::select(Year,season, ModelFleet,Catch) %>%
+			dplyr::filter(Year >= 1950) %>%
 			rbind(c(-999,1,1,0),
 				  c(-999,1,2,0),
 				  c(-999,1,3,0),
@@ -534,12 +452,12 @@ knitr::knit(paste0(PATH, "cpue_comp/IOTC_SWO_CPUE.Rmd"))
 
 This section involves taking the CPUEs for SWO (calculated / estimated / modelled externally) and format them ready for inclusion in SS3.
 
+* There are 13 cpue indices
+* cpue_names <-c("nw_jap",	"ne_jap",	"sw_jap",	"se_jap",	"nw_twn",	"ne_twn",	"sw_twn",	"se_twn",	"ne_idn",	"sw_zaf",	"sw_eu_prt",	"sw_eu_reu",	"sw_eu_esp")
+
 ### Set up the data and folders
 
 ```{r CPUE_data}
-
-# There are 13 cpue indices - what a mess
-# cpue_names <-c("nw_jap",	"ne_jap",	"sw_jap",	"se_jap",	"nw_twn",	"ne_twn",	"sw_twn",	"se_twn",	"ne_idn",	"sw_zaf",	"sw_eu_prt",	"sw_eu_reu",	"sw_eu_esp")
 
 figure_name = "CPUE_1_INPUT_comp"
 CPUE_1_INPUT_OBJECT=list();
@@ -586,9 +504,6 @@ data <- subset(data,select=c(Year,Index,Fishery, fleet, AssessmentArea))
 ```{r edit_timeframes_CPUE}
 
 work <- transform(data, Fleet2 = ifelse(data$fleet=='UJPLL',ifelse(data$Year>1993,'UJPLL post-1994','FAIL'),data$fleet))
-# work <- subset(work,Fleet2 %in% c("UJPLL pre-1994","UJPLL post-1994","UTWLL","UPOR","UIND","UZAF","UESP")) #"URELL" 
-# work$Fleet2 = factor(work$Fleet2,c("UJPLL pre-1994","UJPLL post-1994","UTWLL","UPOR","UESP","URELL","UIND","UZAF"))
-# work$AssessmentArea = as.factor(work$AssessmentArea,c("NW","NE","SW","SE"))
 
 ```
 
@@ -598,12 +513,9 @@ work <- plyr::ddply(work,c('AssessmentArea'),.fun=function(d) {
   s = mean(d[d$Fleet2 =='UJPLL post-1994','Index']); 
 	s1 = mean(d[d$Fleet2 =='UJPLL post-1994' & d$Year >=2005,'Index']);
 	s2 = mean(d[d$Fleet2 =='UJPLL post-1994' & d$Year >=2000,'Index']); 
-	# s3 = d[d$Fleet2 =='UJPLL pre-1994' & d$Year ==1993,'Index'];
-	# s4 = d[d$Fleet2 =='UJPLL post-1994' & d$Year ==1994,'Index'];
-	
+
 	d[d$Fleet2 =='UTWLL','Index']= d[d$Fleet2 =='UTWLL','Index']/mean(d[d$Fleet2 =='UTWLL','Index']) * s1;
-	# d[d$Fleet2 =='UJPLL pre-1994','Index']= d[d$Fleet2 =='UJPLL pre-1994','Index']/s3 * s4;
-	
+
 	if(d$AssessmentArea[1]== 3) { #"SW"
 											    d[d$Fleet2 =='UTWLL' & d$Year == '1992','Index'] = NA
 													d[d$Fleet2 =='UESP','Index']= d[d$Fleet2 =='UESP','Index']/mean(d[d$Fleet2 =='UESP','Index']) * s2;
@@ -620,8 +532,6 @@ work <- plyr::ddply(work,c('AssessmentArea'),.fun=function(d) {
 	}
   )
 
-# mult <- 1.005 ^ ind ## 0.5 % discount in CPUE ()
-# data$pr_prime <- data$pr_prime/mult
 
 ```
 
@@ -659,48 +569,16 @@ work$Month = 7
 dat = work[,c('Year','Month','Fishery','Index','CV')]
 dat = dat[order(dat$Fishery),]
 
-
-# regional scaling factors based on area size from Nishida: 0.2478, 0.2577, 0.1638, 0.3307 - page 10 [https://openknowledge.fao.org/server/api/core/bitstreams/bcb27fee-06ee-4e12-87fb-a6e954aed27d/content]
-# dat[dat$Fishery == 16,'Index']	= dat[dat$Fishery == 16,'Index'] *	0.2478,	
-# dat[dat$Fishery == 17,'Index']	= dat[dat$Fishery == 17,'Index'] *	0.2577	 
-# dat[dat$Fishery == 18,'Index']	= dat[dat$Fishery == 18,'Index'] *	0.1638	 
-# dat[dat$Fishery == 19,'Index']	= dat[dat$Fishery == 19,'Index'] *	0.3307	 
-
-
 # regional scaling factors based on biomass estimates from area-specific models: 1.0429317 1.3583085 0.8990183 0.6997415
 dat[dat$Fishery == 16,'Index']	= dat[dat$Fishery == 16,'Index']/mean(dat[dat$Fishery == 16,'Index']) *	1.0429317	
 dat[dat$Fishery == 17,'Index']	= dat[dat$Fishery == 17,'Index']/mean(dat[dat$Fishery == 17,'Index']) *	1.3583085	 
 dat[dat$Fishery == 18,'Index']	= dat[dat$Fishery == 18,'Index']/mean(dat[dat$Fishery == 18,'Index']) *	0.8990183	 
 dat[dat$Fishery == 19,'Index']	= dat[dat$Fishery == 19,'Index']/mean(dat[dat$Fishery == 19,'Index']) *	0.6997415	 
 
-# regional scaling factor based on 5x5 catch effort data (see CE.5.input.R)
-# JPLL       NE        NW        SE        SW 
-		# 1.1083006 1.0573829 1.1692707 0.6650458 
-# TWLL       NE        NW        SE        SW 
-		# 1.1658178 1.1848665 0.7580326 0.8912831 
-
-# dat[dat$Fishery == 16,'Index']	= dat[dat$Fishery == 16,'Index']/mean(dat[dat$Fishery == 16,'Index']) *	1.0573829 
-# dat[dat$Fishery == 17,'Index']	= dat[dat$Fishery == 17,'Index']/mean(dat[dat$Fishery == 17,'Index']) *	1.1083006		 
-# dat[dat$Fishery == 18,'Index']	= dat[dat$Fishery == 18,'Index']/mean(dat[dat$Fishery == 18,'Index']) *	0.6650458	  
-# dat[dat$Fishery == 19,'Index']	= dat[dat$Fishery == 19,'Index']/mean(dat[dat$Fishery == 19,'Index']) *	1.1692707	 	 
-
-
-
 dat[dat$Fishery == 20,'Index'] = dat[dat$Fishery == 20,'Index']/mean(dat[dat$Fishery == 20,'Index']) *	mean(dat[dat$Fishery == 16,'Index'])	 
 dat[dat$Fishery == 21,'Index'] = dat[dat$Fishery == 21,'Index']/mean(dat[dat$Fishery == 21,'Index']) *	mean(dat[dat$Fishery == 17,'Index'])	 
 dat[dat$Fishery == 22,'Index'] = dat[dat$Fishery == 22,'Index']/mean(dat[dat$Fishery == 22,'Index']) *	mean(dat[dat$Fishery == 18,'Index'])	 
 dat[dat$Fishery == 23,'Index'] = dat[dat$Fishery == 23,'Index']/mean(dat[dat$Fishery == 23,'Index']) *	mean(dat[dat$Fishery == 19,'Index'])	 
-
-######## correlation ################
-# cor(dat[dat$Fishery == 16 & dat$Year %in% 2005:2022,"Index"], dat[dat$Fishery == 20 & dat$Year %in% 2005:2022,"Index"])
-# cor(dat[dat$Fishery == 17 & dat$Year %in%  c(2005:2018,2020:2022),"Index"], dat[dat$Fishery == 21 & dat$Year %in% c(2005:2018,2020:2022),"Index"])
-# cor(dat[dat$Fishery == 18 & dat$Year %in% c(2005,2006,2008:2022),"Index"], dat[dat$Fishery == 22 & dat$Year %in% c(2005,2006,2008:2022),"Index"])
-# cor(dat[dat$Fishery == 19 & dat$Year %in% 2005:2016,"Index"], dat[dat$Fishery == 23 & dat$Year %in% 2005:2016,"Index"])
-# 
-# cor(dat[dat$Fishery == 27 & dat$Year %in% c(2006:2022),"Index"], dat[dat$Fishery == 21 & dat$Year %in% c(2006:2022),"Index"])
-# cor(dat[dat$Fishery == 24 & dat$Year %in% c(2004:2019),"Index"], dat[dat$Fishery == 26 & dat$Year %in% c(2004:2019),"Index"])
-# cor(dat[dat$Fishery == 24 & dat$Year %in% c(2005,2006,2008:2022),"Index"], dat[dat$Fishery == 22 & dat$Year %in% c(2005,2006,2008:2022),"Index"])
-# cor(dat[dat$Fishery == 26 & dat$Year %in% c(2005,2006,2008:2019),"Index"], dat[dat$Fishery == 22 & dat$Year %in% c(2005,2006,2008:2019),"Index"])
 
 CPUE_SS3 <- dat
 
@@ -734,15 +612,28 @@ LF_1_INPUT_OBJECT = list()
 
 ```{r read_LF_data}
 
-##TODO
-
 ModelFisheries =c('ALGI NW', 'JPLL NW','TWLL NW','ALGI NE','JPLL NE','TWLL NE','TWFL NE','EUEL SW','ISEL SW','JPLL SW','TWLL SW','AUEL SE','EUEL SE','JPLL SE','TWLL SE')
-# cpue_names <-c("nw_jap",	"ne_jap",	"sw_jap",	"se_jap",	"nw_twn",	"ne_twn",	"sw_twn",	"se_twn",	"ne_idn",	"sw_zaf",	"sw_eu_prt",	"sw_eu_reu",	"sw_eu_esp")
+
 Data <- read.csv(make.filename(file = "iotc_swordfish_standardised_sf_dataset_base_case_v1.2.csv",path=paste0(PATH_DATA, "LF/2026/")))
 C_labels  = c(Paste("C00",1:9),Paste("C0",10:99),Paste("C",100:150))			
 L_labels  = c(Paste("L00",1:9),Paste("L0",10:99),Paste("L",100:150))
 
 dHelper <- read_excel(make.filename(file = "IOTC-DATASETS-2026-02-03-SF-SWO-1970-2024.xlsx", path=paste0(PATH_DATA, "CE/2026/")), sheet='mappings')
+# 
+# Data1 <- Data %>% 
+#   dplyr::rename(AssessmentArea=SA_AREA_CODE,Year=YEAR,Month = MONTH_START, Grid = FISHING_GROUND_CODE, TotalKG=KG_FISH, TotalNO=NO_FISH,FirstClassLow=FIRST_CLASS_LOW,SizeInterval=SIZE_INTERVAL, Fleet = FLEET_CODE, Gear = GEAR_CODE, SchoolType = SCHOOL_TYPE_CODE) %>%
+#   dplyr::rename_at(C_labels, ~(L_labels)) %>% 
+#   dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_NORTHEAST'),'NE'))  %>%
+#   dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_NORTHWEST'),'NW'))  %>%
+#   dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_OTHER'),'SE'))  %>%
+#   dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTH_SOUTHEAST'),'SE')) %>%
+#   dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTH_SOUTHWEST'),'SW')) %>%
+#   dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTHEAST'),'SE')) %>%
+#   dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTHWEST'),'SW')) %>%
+#   filter(FISHERY_CODE != "PSFS" & FISHERY_CODE != "PSLS") %>%
+#   left_join(dHelper, by=c("Fleet"="FLEET", "Gear"="GEAR_CODE","SchoolType"="SCHOOL_TYPE_CODE")) %>%
+#   dplyr::rename(FisheryGroup = FISHERY, Fishery = FISHERY_CODE)
+
 
 Data1 <- Data %>% 
   dplyr::rename(AssessmentArea=SA_AREA_CODE,Year=YEAR,Month = MONTH_START, Grid = FISHING_GROUND_CODE, TotalKG=KG_FISH, TotalNO=NO_FISH,FirstClassLow=FIRST_CLASS_LOW,SizeInterval=SIZE_INTERVAL, Fleet = FLEET_CODE, Gear = GEAR_CODE, SchoolType = SCHOOL_TYPE_CODE) %>%
@@ -756,37 +647,7 @@ Data1 <- Data %>%
   dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTHWEST'),'SW')) %>%
   filter(FISHERY_CODE != "PSFS" & FISHERY_CODE != "PSLS") %>%
   left_join(dHelper, by=c("Fleet"="FLEET", "Gear"="GEAR_CODE","SchoolType"="SCHOOL_TYPE_CODE")) %>%
-  rename(FisheryGroup = FISHERY, Fishery = FISHERY_CODE)
-
-wtf <- Data1 %>% filter(is.na(FisheryGroup)) %>%
-  group_by(Fleet, Gear, SchoolType, Fishery) %>%
-  summarise()## find fleets not included in LF data - new ones from the previous assessment. This is fun.
-
-print(wtf)
-
-#  Fleet Gear  SchoolType Fishery
-#   <chr> <chr> <chr>      <chr>  
-# 1 EUESP ELLOB UNCL       LL     
-# 2 IDN   FLLOB UNCL       LL     
-# 3 IDN   LLOB  UNCL       LL     
-# 4 KEN   LLOB  UNCL       LL     
-# 5 MDG   GILL  UNCL       GL     
-# 6 MOZ   FLLOB UNCL       LL     
-# 7 ZAF   LLOB  UNCL       LL     
-
-Data1 <- Data %>% 
-  dplyr::rename(AssessmentArea=SA_AREA_CODE,Year=YEAR,Month = MONTH_START, Grid = FISHING_GROUND_CODE, TotalKG=KG_FISH, TotalNO=NO_FISH,FirstClassLow=FIRST_CLASS_LOW,SizeInterval=SIZE_INTERVAL, Fleet = FLEET_CODE, Gear = GEAR_CODE, SchoolType = SCHOOL_TYPE_CODE) %>%
-  dplyr::rename_at(C_labels, ~(L_labels)) %>% 
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_NORTHEAST'),'NE'))  %>%
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_NORTHWEST'),'NW'))  %>%
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_OTHER'),'SE'))  %>%
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTH_SOUTHEAST'),'SE')) %>%
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTH_SOUTHWEST'),'SW')) %>%
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTHEAST'),'SE')) %>%
-  dplyr::mutate(AssessmentArea = replace(AssessmentArea, which(AssessmentArea == 'SA_SWO_SOUTHWEST'),'SW')) %>%
-  filter(FISHERY_CODE != "PSFS" & FISHERY_CODE != "PSLS") %>%
-  left_join(dHelper, by=c("Fleet"="FLEET", "Gear"="GEAR_CODE","SchoolType"="SCHOOL_TYPE_CODE")) %>%
-  rename(FisheryGroup = FISHERY, Fishery = FISHERY_CODE) %>%
+  dplyr::rename(FisheryGroup = FISHERY, Fishery = FISHERY_CODE) %>%
   dplyr::mutate(Quarter = floor((Month-1)/3) + 1) %>%
   	# dplyr::rename_at(T_labels, ~(L_labels)) %>% 
 		dplyr::select(Year,Quarter, FisheryGroup,AssessmentArea,TotalKG,TotalNO,FirstClassLow,SizeInterval,L001:L150) %>%  
@@ -807,13 +668,6 @@ Data1 <- Data %>%
 		dplyr::mutate(AssessmentAreaName=AssessmentArea,ModelAreaName=ModelArea)  %>%		
 		dplyr::mutate(ModelFishery = paste(FisheryGroup,ModelAreaName,sep=' ')) 
 
-wtf <- Data1 %>% group_by(ModelFishery, ModelArea, FisheryGroup) %>% # filter(ModelFishery %in% c("AUEL SE")) %>% #, "ISEL NE")) %>%
-  summarise()
-print(wtf)
-
-wtf <- Data1 %>% filter(is.na(FisheryGroup))
-print(wtf)
-
 data <- Data1 %>% 
 		gather(length,total,L001:L150) %>%
 		mutate(length = FirstClassLow+(as.numeric(substr(length,2,4))-1)*SizeInterval) %>% 
@@ -824,6 +678,8 @@ data <- Data1 %>%
 ```
 
 ### Output LF data to SS3
+
+There are three filterings that were done for this assessment. Read code carefully.
 
 ```{r output_LF_SS3}
 		
@@ -864,40 +720,39 @@ work =  data  %>%
 			mutate_cond(length >= 252 & length < 261 ,length=252) %>%
 			mutate_cond(length >= 261 & length < 270 ,length=261) %>%
 			mutate_cond(length >= 270, length=270) %>%			
-			mutate(length=ifelse(length<100,Paste("L0",length),Paste("L",length))) %>% 
-			group_by(Year,ModelFishery,length) %>% 
-			summarise(total=sum(total),TotalNO = unique(TotalNO)) %>%
-			spread(length,total,fill=0) %>%
-			as.data.frame()
+			dplyr::mutate(length=ifelse(length<100,Paste("L0",length),Paste("L",length))) %>% 
+			dplyr::group_by(Year,ModelFishery,length) %>% 
+			dplyr::summarise(total=sum(total),TotalNO = unique(TotalNO)) %>%
+			tidyr::spread(length,total,fill=0) 
 
-dat = work %>%
-    dplyr::filter(!(ModelFishery=="ALGI NW"))  %>%
-  dplyr::mutate(ModelFishery = factor(ModelFishery,levels=ModelFisheries)) %>%
-	dplyr::mutate(ModelFleet = as.numeric(ModelFishery)) %>%
-	dplyr::mutate(Nsamp = pmin(TotalNO,200)) %>%
-	dplyr::filter(!Nsamp < 10) %>%
-	dplyr::mutate(Seas=1,Gender = 0,Part = 0) %>%
-	dplyr::select(Year,Seas,ModelFleet,Gender,Part,Nsamp,all_of(L_labels)) %>%
-	dplyr::arrange(ModelFleet,Year)		
+# dat_nofilter = work %>% ## NO FILTERING
+#     dplyr::filter(!(ModelFishery=="ALGI NW"))  %>%
+#   dplyr::mutate(ModelFishery = factor(ModelFishery,levels=ModelFisheries)) %>%
+# 	dplyr::mutate(ModelFleet = as.numeric(ModelFishery)) %>%
+# 	dplyr::mutate(Nsamp = pmin(TotalNO,200)) %>%
+# 	dplyr::filter(!Nsamp < 10) %>%
+# 	dplyr::mutate(Seas=1,Gender = 0,Part = 0) %>%
+# 	dplyr::select(Year,Seas,ModelFleet,Gender,Part,Nsamp,all_of(L_labels)) %>%
+# 	dplyr::arrange(ModelFleet,Year)		
+# 
+# dat_2023 = work %>% ## PREVIOUS MODEL FILTERING
+#     dplyr::filter(!(ModelFishery=="ALGI NW"))  %>%
+#     dplyr::filter(!(ModelFishery=="JPLL NW" & Year %in% c(1992,2009:2016,2020:2021)))  %>%
+#     dplyr::filter(!(ModelFishery=="ALGI NE" & Year %in% c(2007:2021)))  %>%
+#     dplyr::filter(!(ModelFishery=="JPLL NE" & Year %in% c(2001:2012)))  %>%
+#     dplyr::filter(!(ModelFishery=="TWFL NE" & Year %in% c(1950:2003)))  %>%
+#     dplyr::filter(!(ModelFishery=="ISEL SW" & Year %in% c(2021))) %>%
+#     dplyr::filter(!(ModelFishery=="JPLL SW" & Year %in% c(2003,2004,2011:2015,2020:2021)))  %>%
+#     dplyr::filter(!(ModelFishery=="JPLL SE" & Year %in% c(1993:2017)))  %>%
+# 	dplyr::mutate(ModelFishery = factor(ModelFishery,levels=ModelFisheries)) %>%
+# 	dplyr::mutate(ModelFleet = as.numeric(ModelFishery)) %>%
+# 	dplyr::mutate(Nsamp = pmin(TotalNO,200)) %>%
+# 	dplyr::filter(!Nsamp < 10) %>%
+# 	dplyr::mutate(Seas=1,Gender = 0,Part = 0) %>%
+# 	dplyr::select(Year,Seas,ModelFleet,Gender,Part,Nsamp,all_of(L_labels)) %>%
+# 	dplyr::arrange(ModelFleet,Year)		
 
-dat = work %>%
-    dplyr::filter(!(ModelFishery=="ALGI NW"))  %>%
-    dplyr::filter(!(ModelFishery=="JPLL NW" & Year %in% c(1992,2009:2016,2020:2021)))  %>%
-    dplyr::filter(!(ModelFishery=="ALGI NE" & Year %in% c(2007:2021)))  %>%
-    dplyr::filter(!(ModelFishery=="JPLL NE" & Year %in% c(2001:2012)))  %>%
-    dplyr::filter(!(ModelFishery=="TWFL NE" & Year %in% c(1950:2003)))  %>%
-    dplyr::filter(!(ModelFishery=="ISEL SW" & Year %in% c(2021))) %>%
-    dplyr::filter(!(ModelFishery=="JPLL SW" & Year %in% c(2003,2004,2011:2015,2020:2021)))  %>%
-    dplyr::filter(!(ModelFishery=="JPLL SE" & Year %in% c(1993:2017)))  %>%
-	dplyr::mutate(ModelFishery = factor(ModelFishery,levels=ModelFisheries)) %>%
-	dplyr::mutate(ModelFleet = as.numeric(ModelFishery)) %>%
-	dplyr::mutate(Nsamp = pmin(TotalNO,200)) %>%
-	dplyr::filter(!Nsamp < 10) %>%
-	dplyr::mutate(Seas=1,Gender = 0,Part = 0) %>%
-	dplyr::select(Year,Seas,ModelFleet,Gender,Part,Nsamp,all_of(L_labels)) %>%
-	dplyr::arrange(ModelFleet,Year)		
-
-dat = work %>%
+dat = work %>% ## 2026 MODEL FILTERING
     dplyr::filter(!(ModelFishery=="ALGI NW"))  %>%
     dplyr::filter(!(ModelFishery=="JPLL NW" & Year %in% c(1992,2000,2009:2016,2020:2021)))  %>%
     dplyr::filter(!(ModelFishery=="ALGI NE" & Year %in% c(2007:2021)))  %>%
@@ -918,7 +773,7 @@ dat = work %>%
 temp = dat[,L_labels]
 temp[,] = 0
 names(temp) = c(Paste("R0",15),Paste("R0",seq(45,99,by=9)),Paste("R",seq(108,270,by=9)))
-dat = round(cbind(dat,temp))
+dat = cbind(dat, temp)
 dat = dat[,c('Year','Seas','ModelFleet','Gender','Part','Nsamp',c(Paste("L0",15),Paste("L0",seq(45,99,by=9)),Paste("L",seq(108,270,by=9))),c(Paste("R0",15),Paste("R0",seq(45,99,by=9)),Paste("R",seq(108,270,by=9))))]
 dat[,7:60]= round(dat[,7:60]+0.00001,5)
 options(width=2000)
@@ -926,14 +781,15 @@ write.table(dat,file="temp.txt",sep='\t',row.names=F)
 max(dat$Year)
 max(work$Year)
 
-wtf <- dat %>% filter(is.na(ModelFleet))
-
-print(wtf)
+# wtf <- dat %>% filter(is.na(ModelFleet))
+# 
+# print(wtf)
 	
 
 LF_1_INPUT_OBJECT[["data"]] = dat
 	
 save(file="LF_1_INPUT.object",list=c("LF_1_INPUT_OBJECT"))
+
 
 ```
 
@@ -942,263 +798,9 @@ save(file="LF_1_INPUT.object",list=c("LF_1_INPUT_OBJECT"))
 ```{r save_LF_SS3_input}
 
 save(file=paste0(PATH_SS3_INPUT,"LF_1_INPUT.object"),list=c("LF_1_INPUT_OBJECT")) 
-# write.csv(dat, file =paste0(PATH_SS3_INPUT,"SS3LFinput_all_except_algi_nw.csv")) # in data.ss file
-# write.csv(dat, file =paste0(PATH_SS3_INPUT,"SS3LFinput_old_filter.csv")) # in data.ss file
+# write.csv(dat_nofilter, file =paste0(PATH_SS3_INPUT,"SS3LFinput_all_except_algi_nw.csv")) # in data.ss file
+# write.csv(dat_2023, file =paste0(PATH_SS3_INPUT,"SS3LFinput_old_filter.csv")) # in data.ss file
 write.csv(dat, file =paste0(PATH_SS3_INPUT,"SS3LFinput_2026.csv")) # in data.ss file
-
-```
-
-### Length-Frequency Plots {.tabset .tabset-pills}
-
-```{r LF_setup_figure}
-
-figure_name = "LF_input_"
-
-attach(paste0(PATH_SS3_INPUT,"CE_1a_input.object"))
-attach(paste0(PATH_SS3_INPUT,"LF_1_input.object"))
-
-dataCE = CE_1a_INPUT_OBJECT[['data']]	
-data = LF_1_INPUT_OBJECT[['data']]
-
-ModelFisheries =c('ALGI NW', 'JPLL NW','TWLL NW','ALGI NE','JPLL NE','TWLL NE','TWFL NE','EUEL SW','ISEL SW','JPLL SW','TWLL SW','AUEL SE','EUEL SE','JPLL SE','TWLL SE')
-
-FisheryGroup = c('ALGI','AUEL','EUEL','ISEL','JPLL','TWFL','TWLL')
-
-data = data %>% 
-			dplyr::mutate(L270=rowSums(select(data,L270:R270))) %>% 
-			dplyr::select(-(R015:R270)) %>% 
-			dplyr::filter(Nsamp > 0) 		
-
-# Load SS3 LF data
-
-dat <-  r4ss::SS_readdat_3.30(paste0(PATH_MODELRUNS, "/0_base_2023/data.ss"), verbose=FALSE)
-
-dat1 <- dat$lencomp
-LF2 = dat1 ## 2023 data for comparison
-colnames(LF2) = c("Yr","Seas","FltSvy","Gender","Part","Nsamp",c(Paste("L0",15),Paste("L0",seq(45,99,by=9)),Paste("L",seq(108,270,by=9)),Paste("R0",15),Paste("R0",seq(45,99,by=9)),Paste("R",seq(108,270,by=9))))
-LF2$Year =floor(qtr2yearqtr(LF2$Yr,1952,101))	
-
-GRID_PARAM=setup_GRID_PARAM()
-GRID = setup_GRID(GRID_PARAM)
-
-```
-
-#### 1) Length-frequency over time
-
-```{r time_coverage_plot}
-
-###############
-# TimeCoverage
-###############
-
-work = dataCE
-catchmat <- matrix(NA, 15,2)
-for(i in 1:length(ModelFisheries)){
-	catchmat[i,1] <- min(work[work$ModelFishery == ModelFisheries[i] & work$Catch  > 0,'Year'])
-	catchmat[i,2] <- max(work[work$ModelFishery == ModelFisheries[i] & work$Catch  > 0,'Year'])
-}
-data <- as.data.frame(data)
-obs <- data %>%
-mutate(ModelFleet = factor(ModelFleet, levels = 1:15, labels = ModelFisheries)) %>%
-  dplyr::group_by(Year,ModelFleet) %>%
-	dplyr::summarise(n=sum(Nsamp))  %>%
-	as.data.frame() 
-x <- tapply(obs$n, list(obs$Year, obs$ModelFleet), sum)
-x[1,1]=0
-Year <- sort(unique(obs$Year))
-
-savepng('coverage.png',width=17.78, height=17.78)
-par(mar=c(3,3,2,1), omi=c(0,0.2,0,0))
-plot(1,1,type="n", ylim=c(0.5,15.5), xlim=c(1950,2024), ylab="", xlab="", yaxt="n")
-for(i in 1:length(ModelFisheries)){
-	symbols(Year, rep(i,length(Year)), circles=sqrt(x[,i]), fg = 1, bg = "grey",add=T, inches=0.15)
-}
-for(i in 1:15){
-	lines(catchmat[i,], rep(i,2), lwd=2, col=2)
-	text(1942, i, ModelFisheries[i], xpd=NA,cex=0.9)
-}
-dev.off()
-
-```
-
-#### 2) Aggregated LF by ModelFishery
-
-```{r LF_plot_ModelFishery}
-
-#######################
-# aggregated LF by ModelFishery
-#######################
-
-###############
-# Aggregated LF
-###############
-Llabel = c(Paste("L0",seq(15,99,by=3)),Paste("L",seq(102,270,by=3)))			
-work = data %>% 
-		group_by(ModelFleet) %>% 
-		summarise_at(c(Llabel),list(Sum))
-work[,Llabel] = work[,Llabel]/rowSums(work[,Llabel])
-
-tempFUN = function(f) {
-	temp = work[work$ModelFleet == f,Llabel]
-	plot(L,temp[,Llabel],col='blue',xlab="", ylab="", lwd=2,type='l',xlim=range(L),ylim=c(0,max(temp[,Llabel])))
-	lines(range(L), rep(0,2), lty=3)
-	polygon(c(L,rev(range(L))), c(temp[,Llabel], rep(0,2)), col="gray")
-	mtext(side=3,paste(f),line=0.1,cex=1.2)
-}
-
-savepng('Aggregated.png',width=25,height=25)
-par(mfrow=c(4,4), mar=c(2,2,2,1),oma=c(2,2,1,1))
-L = seq(15,270,by=3)
-tempFUN('JPLL NW')
-tempFUN('TWLL NW')
-plblank(axes=F)
-plblank(axes=F)
-tempFUN('JPLL NE')
-tempFUN('TWLL NE')
-tempFUN('TWFL NE')
-tempFUN('ALGI NE')
-tempFUN('JPLL SW')
-tempFUN('TWLL SW')
-tempFUN('EUEL SW')
-tempFUN('ISEL SW')
-tempFUN('JPLL SE')
-tempFUN('TWLL SE')
-tempFUN('EUEL SE')
-tempFUN('AUEL SE')
-mtext(side=1, outer=T, "Length (cm)",adj=0.5,cex=1.2,line=0.75)	
-dev.off()
-
-```
-
-#### 3) Mean LF by ModelFishery
-
-```{r mean_LF_plot_ModelFishery}
-
-#######################
-# Mean length over time
-#######################
-
-Llabel = c(Paste("L0",seq(15,99,by=3)),Paste("L",seq(102,270,by=3)))			
-work = data %>% 
-		group_by(ModelFishery,Year) %>% 
-		summarise_at(c(Llabel),list(Sum)) %>% 
-		as.data.frame()
-work$avglen = apply(work,1,FUN=function(x) weighted.mean(seq(15,270, 3),as.numeric(x[3:88])))
-
-tempFUN = function(f) {
-	temp = work[work$ModelFishery == f,c('Year','avglen')]
-	temp = temp[order(temp$Year),]
-	plot(temp[,'Year'],temp[,'avglen'],col='blue',xlab="", ylab="",type='n')
-	points(temp[,'Year'],temp[,'avglen'],col='blue',pch='+',cex=1.3)	
-	if(nrow(temp) > 10) lines(lowess(temp[!is.na(temp$avglen),'Year'], temp[!is.na(temp$avglen),'avglen'],f=0.4),col='slate gray',lwd=2)		
-	mtext(side=3,paste(f),line=0.1,cex=1.2)
-}
-
-savepng('Mean.png',width=25,height=25)
-par(mfrow=c(4,4), mar=c(2,2,2,1),oma=c(2,2,1,1))
-L = seq(15,270,by=3)
-tempFUN('JPLL NW')
-tempFUN('TWLL NW')
-plblank(axes=F)
-plblank(axes=F)
-tempFUN('JPLL NE')
-tempFUN('TWLL NE')
-tempFUN('TWFL NE')
-tempFUN('ALGI NE')
-tempFUN('JPLL SW')
-tempFUN('TWLL SW')
-tempFUN('EUEL SW')
-tempFUN('ISEL SW')
-tempFUN('JPLL SE')
-tempFUN('TWLL SE')
-tempFUN('EUEL SE')
-tempFUN('AUEL SE')
-mtext(side=1, outer=T, "Length (cm)",adj=0.5,cex=1.2,line=0.75)	
-dev.off()
-
-#######################
-# Mean length overtime (JPLL and TWLL only)
-#######################
-
-Llabel = c(Paste("L0",seq(15,99,by=3)),Paste("L",seq(102,270,by=3)))			
-work = data %>% 
-		group_by(ModelFishery,Year) %>% 
-		summarise_at(c(Llabel),list(Sum)) %>% 
-		as.data.frame() 
-work = work %>% 
-		dplyr::mutate(avglen=apply(select(work,L015:L270),1,FUN=function(x,L) weighted.mean (L,x),seq(15,270,by=3)),
-					low=apply(select(work,L015:L270),1,FUN=function(x,L) {quartile = cumsum(x / sum(x));L[quartile>0.10][1]},seq(15,270,by=3)),
-					high=apply(select(work,L015:L270),1,FUN=function(x,L) {quartile = cumsum(x / sum(x));L[quartile>0.90][1]},seq(15,270,by=3)))
-
-
-savepng('Quartile NW.png',width=17.78, height=17.78)	
-ggplot(data=subset(work,ModelFishery %in% c('TWLL NW','JPLL NW'))) +
-	geom_point(aes(x=Year,y=avglen,colour=ModelFishery,shape=ModelFishery),size=2,position=position_dodge(width=1))  + 
-	geom_errorbar(aes(x=Year,ymin=low, ymax=high,colour=ModelFishery),position=position_dodge(width=1),width=0)  +
-	scale_colour_manual("",values=c("TWLL NW"="blue","JPLL NW"="red")) +
-	scale_shape_manual("",values=c("TWLL NW"=16,"JPLL NW"=24)) +
-	labs(x="Year", y = "Length (cm)") + 
-	theme_bw() 
-dev.off()	
-
-savepng('Quartile SW.png',width=17.78, height=17.78)	
-ggplot(data=subset(work,ModelFishery %in% c('TWLL SW','JPLL SW', 'EUEL SW'))) +
-	geom_point(aes(x=Year,y=avglen,colour=ModelFishery,shape=ModelFishery),size=2,position=position_dodge(width=1))  + 
-	geom_errorbar(aes(x=Year,ymin=low, ymax=high,colour=ModelFishery),position=position_dodge(width=1),width=0)  +
-	scale_colour_manual("",values=c("TWLL SW"="blue","JPLL SW"="red","EUEL SW"="orange")) +
-	scale_shape_manual("",values=c("TWLL SW"=16,"JPLL SW"=24,"EUEL SW"=NA)) +
-	labs(x="Year", y = "Length (cm)") + 
-	theme_bw() 
-dev.off()	
-
-
-savepng('Quartile NE.png',width=17.78, height=17.78)	
-ggplot(data=subset(work,ModelFishery %in% c('TWLL NE','JPLL NE','TWFL NE'))) +
-	geom_point(aes(x=Year,y=avglen,colour=ModelFishery,shape=ModelFishery),size=2,position=position_dodge(width=1))  + 
-	geom_errorbar(aes(x=Year,ymin=low, ymax=high,colour=ModelFishery),position=position_dodge(width=1),width=0)  +
-	scale_colour_manual("",values=c("TWLL NE"="blue","JPLL NE"="red","TWFL NE"="green4")) +
-	scale_shape_manual("",values=c("TWLL NE"=16,"JPLL NE"=24,"TWFL NE"=NA)) +
-	labs(x="Year", y = "Length (cm)") + 
-	theme_bw() 
-dev.off()	
-
-```
-
-#### 4) Length distribution over time by fishery
-
-```{r length_dist_over_time_plot}
-
-#######################
-# length distribution over time
-#######################
-
-Llabel = c(Paste("L0",seq(15,99,by=3)),Paste("L",seq(102,270,by=3)))
-years = sort(unique(data[data$Year>1980,]$Year))
-work = data %>% 
-	dplyr::filter(Year > 1980) %>%
-    dplyr::filter(!(ModelFishery=="JPLL NW" & Year %in% c(1992,2009:2016,2020:2021)))  %>%
-    dplyr::filter(!(ModelFishery=="ALGI NE" & Year %in% c(2007:2021)))  %>%
-    dplyr::filter(!(ModelFishery=="JPLL NE" & Year %in% c(2001:2012)))  %>%
-    dplyr::filter(!(ModelFishery=="TWFL NE" & Year %in% c(1950:2003)))  %>%
-    dplyr::filter(!(ModelFishery=="ISEL SW" & Year %in% c(2021))) %>%
-    dplyr::filter(!(ModelFishery=="JPLL SW" & Year %in% c(2003,2004,2011:2015,2020:2021)))  %>%
-    dplyr::filter(!(ModelFishery=="JPLL SE" & Year %in% c(1993:2017)))  %>%	
-	dplyr::group_by(ModelFishery,Year) %>% 
-	dplyr::summarise_at(Llabel,list(Sum)) %>%
-	tidyr::gather(length,total,L015:L270) %>%
-	dplyr::mutate(length=as.numeric(substr(length,2,4))) %>%
-	dplyr::group_by(ModelFishery,Year) %>%
-	dplyr::group_modify(.f = function(.x,...) data.frame(length=.x$length,n=sum(.x$total),total=.x$total/max(.x$total))) %>%
-	dplyr::mutate(Year = factor(Year,levels=years),ModelFishery=factor(ModelFishery,levels=rev(ModelFisheries)))
-
-
-
-savepng('Distribution.png',width=35,height=25)
-ggplot(work)  +
-  geom_density_ridges(stat='identity',mapping = aes(x =length, y = Year,height = total),scale=2,rel_min_height = 0.01,alpha = .5) +  
-  facet_wrap(~ModelFishery,ncol=8) +
-  theme_ridges()
-dev.off()
 
 ```
 
