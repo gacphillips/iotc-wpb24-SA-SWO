@@ -46,9 +46,6 @@ knitr::kable(results_sens_lik)
 results_updates
 results_sens
 results_grid
-# results1_grid
-# results2_grid
-
 
 ```
 
@@ -144,6 +141,8 @@ h_models <- c(paste0(PATH_MODELRUNS, "4_update_rec", sep=""),
 ## Diagnostic plots, likelihood profiles, retrospectives, and jitter analysis
 
 ```{r diagnostic_plots}
+dir.create(paste0(PATH_DIAGNOSTICS, "plots/", sep=""))
+dir.create(paste0(PATH_MODELRUNS, "4_update_rec/","plots/", sep=""))
 
 source("01_plot_cpue_fits.R")
 source("02_plot_lf_fits.R")

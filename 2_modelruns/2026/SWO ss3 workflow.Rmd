@@ -71,7 +71,7 @@ r4ss::run(dir = mod_path_1,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "console_output.txt",
-          # extras = "-nohess",
+          extras = "-nohess",
           verbose = TRUE)
 
 ```
@@ -103,8 +103,7 @@ SS_plots(replist, minbthresh = 0.20)
 
 mod_path <- paste0(PATH_MODELRUNS,"0_base_2023_exe",sep="") ## updated exe
 
-copy_SS_inputs(dir.old = mod_path_1, dir.new = mod_path, create.dir = TRUE, overwrite=TRUE, copy_exe = FALSE)
-
+# copy_SS_inputs(dir.old = mod_path_1, dir.new = mod_path, create.dir = TRUE, overwrite=TRUE, copy_exe = FALSE)
 
 ```
 
@@ -119,7 +118,7 @@ r4ss::run(dir = mod_path,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "console_output.txt",
-          # extras = "-nohess",
+          extras = "-nohess",
           verbose = TRUE)
 
 ```
@@ -229,7 +228,7 @@ r4ss::run(dir = update_catch_mod,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "new_catch_console_output.txt",
-          # extras = "-nohess", ##second running do this
+          extras = "-nohess", ##second running do this
           verbose = TRUE)
 
 ```
@@ -256,7 +255,7 @@ print(replist_catch$current_depletion)
 
 Add in new length-frequency data.
 
-```{r update_lfdata}
+```{r update_lfdata, eval=FALSE}
 update_lf_mod <- paste0(PATH_MODELRUNS, "2_update_lf",sep="") #new model directory
 copy_SS_inputs(dir.old = update_catch_mod, dir.new = update_lf_mod, create.dir = TRUE, overwrite=TRUE, copy_exe = TRUE)
 
@@ -277,7 +276,7 @@ inputs_lf$dat$lencomp <- new_lf ## replace data
 
 ### Update model with new lf
 
-```{r update_new_lf_in_mod}
+```{r update_new_lf_in_mod, eval=FALSE}
 
 SS_write(inputs_lf, dir = update_lf_mod, overwrite = TRUE)
 
@@ -287,14 +286,14 @@ SS_write(inputs_lf, dir = update_lf_mod, overwrite = TRUE)
 
 ### Run model - new LF data
 
-```{r run_new_lf model, eval=TRUE}
+```{r run_new_lf model, eval=FALSE}
 
 r4ss::run(dir = update_lf_mod,
           exe = paste0(update_lf_mod, "/ss3_win.exe", sep=""),
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "new_lf_console_output.txt",
-          # extras = "-nohess",
+          extras = "-nohess",
           verbose = TRUE)
 ```
 
@@ -302,7 +301,7 @@ r4ss::run(dir = update_lf_mod,
 
 Run this to check diagnostics.
 
-```{r diagnostic_lf_update, eval=TRUE}
+```{r diagnostic_lf_update, eval=FALSE}
 
 replist_lf <- SS_output(update_lf_mod)
 
@@ -313,7 +312,7 @@ SS_plots(replist_lf, minbthresh = 0.20)
 
 ## Filtered length-frequency data - 1) only remove algi_nw
 
-```{r update_lfdata2}
+```{r update_lfdata2, eval=FALSE}
 update_lf_mod <- paste0(PATH_MODELRUNS, "2_update_lf_algi_nw",sep="") #new model directory
 copy_SS_inputs(dir.old = update_catch_mod, dir.new = update_lf_mod, create.dir = TRUE, overwrite=TRUE, copy_exe = TRUE)
 
@@ -333,7 +332,7 @@ inputs_lf$dat$lencomp <- new_lf ## replace data
 
 ### Update model with new lf
 
-```{r update_new_lf2_in_mod}
+```{r update_new_lf2_in_mod, eval=FALSE}
 
 SS_write(inputs_lf, dir = update_lf_mod, overwrite = TRUE)
 
@@ -343,14 +342,14 @@ SS_write(inputs_lf, dir = update_lf_mod, overwrite = TRUE)
 
 ### Run model - new LF data
 
-```{r run_new_lf2 model, eval=TRUE}
+```{r run_new_lf2 model, eval=FALSE}
 
 r4ss::run(dir = update_lf_mod,
           exe = paste0(update_lf_mod, "/ss3_win.exe", sep=""),
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "new_lf_console_output.txt",
-          # extras = "-nohess",
+          extras = "-nohess",
           verbose = TRUE)
 ```
 
@@ -358,7 +357,7 @@ r4ss::run(dir = update_lf_mod,
 
 Run this to check diagnostics.
 
-```{r diagnostic_lf_update2, eval=TRUE}
+```{r diagnostic_lf_update2, eval=FALSE}
 
 replist_lf <- SS_output(update_lf_mod)
 
@@ -407,7 +406,7 @@ r4ss::run(dir = update_lf_mod,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "new_lf_console_output.txt",
-          # extras = "-nohess",
+          extras = "-nohess",
           verbose = TRUE)
 ```
 
@@ -607,15 +606,15 @@ SS_write(inputs_cpue, dir = update_cpue_mod, overwrite = TRUE)
 
 ### Run model - new CPUE
 
-```{r run_new_cpue model, eval=TRUE}
+```{r run_new_cpue_model, eval=TRUE}
 
 r4ss::run(dir = update_cpue_mod,
           exe = paste0(update_cpue_mod, "/ss3_win.exe", sep=""),
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "new_cpue_console_output.txt",
-          extras = "-maxfn 5000",
-          # extras = "-nohess",
+          # extras = "-maxfn 5000",
+          extras = "-maxfn 5000 -nohess",
           verbose = TRUE)
 ```
 
@@ -691,7 +690,7 @@ inputs_cpue$dat <- dat
 
 ### Output new CPUE to dat file
 
-```{r output_new_CPUE}
+```{r output_new_CPUE_dat}
 
 SS_write(inputs_cpue, dir = update_cpue_mod_2, overwrite = TRUE)
 
@@ -701,15 +700,15 @@ SS_write(inputs_cpue, dir = update_cpue_mod_2, overwrite = TRUE)
 
 ### Run model - new CPUE
 
-```{r run_new_cpue model, eval=TRUE}
+```{r run_new_cpue2_model, eval=TRUE}
 
 r4ss::run(dir = update_cpue_mod_2,
           exe = paste0(update_cpue_mod, "/ss3_win.exe", sep=""),
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "new_cpue_console_output.txt",
-          extras = "-maxfn 5000",
-          # extras = "-nohess",
+          # extras = "-maxfn 5000",
+          extras = "-maxfn 5000 -nohess",
           verbose = TRUE)
 ```
 
@@ -717,7 +716,7 @@ r4ss::run(dir = update_cpue_mod_2,
 
 Run this to check diagnostics. Can run full KOBE plot etc. later, when happy with the final 'base' model to run the grid from.
 
-```{r diagnostic_cpue_update, eval=TRUE}
+```{r diagnostic_cpue_update_replist, eval=TRUE}
 
 replist_cpue <- SS_output(update_cpue_mod_2)
 
@@ -769,7 +768,7 @@ r4ss::run(dir = update_rec_mod,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "rec_catch_console_output.txt",
-          # extras = "-nohess", ##second running do this
+          extras = "-nohess", ##second running do this
           verbose = TRUE)
 		  
 		  
@@ -787,7 +786,7 @@ SS_plots(replist_rec, minbthresh = 0.20)
 
 Currently set to 1965 to 2020 (last model was 2021 final year of data). There is very low catch from the start of the model until around 1994 so it doesn't make sense to me to have recruitment estimated over this early part as the fishery was not neccessarily a 'target' fishery, and was most likely a 'bycatch' fishery.
 
-```{r update_rec}
+```{r update_rec_short}
 
 update_rec_mod <- paste0(PATH_MODELRUNS, "4_update_rec", sep="") ## new model directory
 
@@ -825,13 +824,13 @@ SS_write(inputs, dir = update_rec_short, overwrite = TRUE)
 
 ```
 
-```{r run_rec_model, eval=TRUE}
+```{r run_rec_model_short, eval=TRUE}
 r4ss::run(dir = update_rec_short,
           exe = paste0(update_rec_short, "/ss3_win.exe", sep=""),
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "rec_catch_console_output.txt",
-          # extras = "-nohess", ##second running do this
+          extras = "-nohess", ##second running do this
           verbose = TRUE)
 		  
 		  
@@ -881,7 +880,7 @@ r4ss::run(dir = update_mod_time,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "rec_tag_console_output.txt",
-          # extras = "-nohess", ##second running do this
+          extras = "-nohess", ##second running do this
           verbose = TRUE)
 		  
 		  
@@ -944,7 +943,7 @@ r4ss::run(dir = cpue_TW,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "cpue_TW_console_output.txt",
-          # extras = "-nohess",
+          extras = "-nohess",
           verbose = TRUE)
 ```
 
@@ -1017,7 +1016,7 @@ r4ss::run(dir = altCPUE,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "altCPUE_console_output.txt",
-          # extras = "-nohess",
+          extras = "-nohess",
           verbose = TRUE)
 ```
 
@@ -1237,7 +1236,7 @@ r4ss::run(dir = altCPUE_prt_reu,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "altCPUE_prt_reu_console_output.txt",
-          extras = "-maxfn 5000", 
+          extras = "-maxfn 5000 -nohess", 
           # extras = "-nohess",
           verbose = TRUE)
 ```
@@ -1306,7 +1305,7 @@ r4ss::run(dir = altCPUE_prt,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "altCPUE_prt_console_output.txt",
-          extras = "-maxfn 5000",
+          extras = "-maxfn 5000 -nohess",
           # extras = "-nohess",
           verbose = TRUE)
 ```
@@ -1412,7 +1411,7 @@ r4ss::run(dir = new_growth,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "new_growth_console_output.txt",
-          extras = "-maxfn 5000",
+          extras = "-maxfn 5000 -nohess",
           # extras = "-nohess",
           verbose = TRUE)
 ```
@@ -1474,7 +1473,7 @@ r4ss::run(dir = natM_lorenzen,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "natM_lorenzen_console_output.txt",
-          extras = "-maxfn 5000",
+          extras = "-maxfn 5000 -nohess",
           # extras = "-nohess",
           verbose = TRUE)
 ```
@@ -1527,7 +1526,7 @@ r4ss::run(dir = natM_lorenzen_new_grow,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "natM_lorenzen_new_growconsole_output.txt",
-          extras = "-maxfn 5000",
+          extras = "-maxfn 5000 -nohess",
           # extras = "-nohess",
           verbose = TRUE)
 
@@ -1580,7 +1579,7 @@ r4ss::run(dir = sigma_R4,
           skipfinished = FALSE,
           show_in_console = TRUE,
           console_output_file = "sigma_R4_console_output.txt",
-          extras = "-maxfn 5000",
+          extras = "-maxfn 5000 -nohess",
           # extras = "-nohess",
           verbose = TRUE)
 
@@ -1754,7 +1753,7 @@ inputs_altCPUE_prt$ctl$lambdas <- lambdas
 
 ### Output new CPUE to dat file
 
-```{r output_altCPUE_prt}
+```{r output_altCPUE_all}
 
 SS_write(inputs_altCPUE_all, dir = altCPUE_all, overwrite = TRUE)
 
@@ -1764,7 +1763,7 @@ SS_write(inputs_altCPUE_all, dir = altCPUE_all, overwrite = TRUE)
 
 ### Run model - new CPUE
 
-```{r run_altCPUE_prt, eval=TRUE}
+```{r run_altCPUE_all, eval=TRUE}
 
 r4ss::run(dir = altCPUE_all,
           exe = paste0(altCPUE_all, "/ss3_win.exe", sep=""),

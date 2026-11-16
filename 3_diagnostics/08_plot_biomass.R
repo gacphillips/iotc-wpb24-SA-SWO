@@ -19,7 +19,6 @@ plotSSB <- function(paths,
     paths <- rep(paths, length(models))
   }
   
-  # Auto-generate enough distinct colours if not supplied
   if (is.null(col)) {
     if (length(models) <= 12) {
       col <- brewer.pal(length(models), "Paired")
@@ -29,7 +28,7 @@ plotSSB <- function(paths,
   }
   
   SSB <- list()
-  YR  <- list()   # years actually matched, parallel to SSB[[i]] by construction
+  YR  <- list()   
   
   for (i in seq_along(models)) {
     der <- extract.derived_quantities(path = paste0(paths[i], models[i]))
@@ -40,7 +39,7 @@ plotSSB <- function(paths,
     labs <- paste0('SSB_', model_tstep)
     sub  <- der[der$Label %in% labs, c("Label", "Value")]
     
-    # Derive year straight from the matched label -> guarantees same length/order as Value
+   
     sub$Year <- as.numeric(sub("SSB_", "", sub$Label))
     sub <- sub[order(sub$Year), ]
     
@@ -61,7 +60,6 @@ plotSSB <- function(paths,
     YR[[i]] <- sub$Year
   }
   
-  # Y labels and limits
   if (!depletion) {
     ylab <- "Spawning biomass (1000s t)"
     ylim <- c(0, max(unlist(SSB), na.rm = TRUE))
@@ -70,10 +68,8 @@ plotSSB <- function(paths,
     ylim <- c(0, 100)
   }
   
-  # X limits: span the full range actually present across all models
   xlim <- range(unlist(YR), na.rm = TRUE)
   
-  # Plot setup
   if (!space) {
     old_par <- par(no.readonly = TRUE)
     on.exit(par(old_par))
@@ -81,7 +77,6 @@ plotSSB <- function(paths,
     plot(NA, xlim = xlim, ylim = ylim, ylab = ylab, xlab = "Year", type = "n")
   }
   
-  # Plot lines for each model — yr and ssb_vals are guaranteed equal length now
   for (i in seq_along(models)) {
     lines(YR[[i]], SSB[[i]], col = col[i], lty = lty[i], lwd = lwd[i])
   }
@@ -92,7 +87,6 @@ plotSSB <- function(paths,
            legend = models, cex = cex, bty = bty)
   }
   
-  # Long-format output instead of rbind, since models can now have different lengths
   out <- do.call(rbind, lapply(seq_along(models), function(i) {
     data.frame(Model = models[i], Year = YR[[i]], Value = SSB[[i]])
   }))
@@ -151,17 +145,17 @@ dev.off()
 # plotSSB(paths = PATH_SENSITIVITES, models = names(M_models), depletion = TRUE)
 # dev.off()
 
-savepng('Model Grid_esp.png', width = 25,height=17.78)
-plotSSB(paths = PATH_GRID, models = mod_grid_names)
-dev.off()
+# savepng('Model Grid_esp.png', width = 25,height=17.78)
+# plotSSB(paths = PATH_GRID, models = mod_grid_names)
+# dev.off()
+# 
+# savepng('Model Grid STATUS_esp.png', width = 25,height=17.78)
+# plotSSB(paths = PATH_GRID, models = mod_grid_names, depletion = TRUE)
+# dev.off()
 
-savepng('Model Grid STATUS_esp.png', width = 25,height=17.78)
-plotSSB(paths = PATH_GRID, models = mod_grid_names, depletion = TRUE)
-dev.off()
-
-savepng('Model All.png', width = 25,height=17.78)
-plotSSB(paths = paths_for_models, models = models)
-dev.off()
+# savepng('Model All.png', width = 25,height=17.78)
+# plotSSB(paths = paths_for_models, models = models)
+# dev.off()
 
 # savepng('Model Grid STATUS.png', width = 25,height=17.78)
 # plotSSB(paths = PATH_GRID, models = mod_grid_names, depletion = TRUE)
@@ -171,96 +165,3 @@ dev.off()
 # plotSSB(paths = PATH_GRID, models = mod_grid_names, depletion = FALSE)
 # dev.off()
 #
-#
-plotSSB_results <- function(paths,
-                    models,
-                    col = NULL,
-                    lwd = rep(3, length(models)),
-                    lty = rep(1, length(models)),
-                    bty = 'n',
-                    cex = 1.0,
-                    lgd = TRUE,
-                    depletion = FALSE,
-                    space = FALSE,
-                    tstep = 1950:2024) {
-
-  # Expand path vector if needed
-  if (length(paths) == 1) {
-    paths <- rep(paths, length(models))
-  }
-
-  # Auto-generate enough distinct colours if not supplied
-  if (is.null(col)) {
-    if (length(models) <= 12) {
-      col <- brewer.pal(length(models), "Paired")
-    } else {
-      col <- colorRampPalette(brewer.pal(12, "Paired"))(length(models))
-    }
-  }
-
-  SSB <- c()
-  yr <- tstep
-
-  for (i in seq_along(models)) {
-    der <- extract.derived_quantities(path = paste0(paths[i], models[i]))
-
-    if (!depletion) {
-      ssb_values <- der[der$Label %in% paste0('SSB_', tstep), 'Value'] / 1000
-    } else {
-      ssb_values <- der[der$Label %in% paste0('SSB_', tstep), 'Value'] /
-        der[der$Label == "SSB_Virgin", 'Value']
-    }
-
-    # Calculate mean SSB per year (every 4 tsteps starting at 193)
-    n_years <- floor(length(tstep))
-    mean_SSB_yearly <- sapply(1:n_years, function(y) {
-      mean(ssb_values, na.rm = TRUE)
-    })
-
-    SSB <- rbind(SSB, mean_SSB_yearly)
-  }
-
-  # Year vector corresponding to yearly mean SSB
-  yr_yearly <- 1950 + 0:(ncol(SSB)-1)
-
-  if (!depletion) {
-    ylab <- "Spawning biomass (1000s t)"
-    ylim <- c(0, max(SSB, na.rm = TRUE))
-  } else {
-    ylab <- "Depletion (SSB(2024)/SSB(1950))"
-    ylim <- c(0, 100)
-  }
-
-  if (!space) {
-    # Add extra space on the right for legend
-    old_par <- par(no.readonly = TRUE)
-    on.exit(par(old_par))
-    par(mar = c(5, 4, 4, 10), xpd = TRUE)
-
-    plot(yr_yearly, SSB[1,], ylab = ylab, ylim = ylim, type = "n",
-         lwd = lwd[1], col = col[1], xlab = "Year")
-  }
-
-  for (i in seq_along(models)) {
-    lines(yr_yearly, SSB[i,], col = col[i], lty = lty[i], lwd = lwd[i])
-  }
-
-  if (lgd) {
-    legend("topright", inset = .02,
-           col = col, lty = lty, lwd = lwd,
-           legend = models, cex = cex, bty = bty)
-  }
-
-  # Return a list with yearly SSB and corresponding years
-  return(list(SSB = SSB,
-              years = yr_yearly))
-}
-
-# results1 <- plotSSB_results(paths = PATH_GRID, models = mod_grid_names, depletion = TRUE )
-# 
-# # Add model names as the first column
-# ssb_out <- cbind(model = mod_grid_names, results1$SSB)
-# 
-# # Write to CSV
-# write.csv(ssb_out, file = paste0(figure_loc, "SSB_percent_yr2.csv"), row.names = FALSE)
-

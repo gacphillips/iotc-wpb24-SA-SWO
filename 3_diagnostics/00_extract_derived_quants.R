@@ -11,7 +11,7 @@ mod_grid_names <- grep("^swo_", mod_grid_names, value = TRUE)
 
 #### MODEL UPDATES
 
-# mod_update_names <- mod_update_names[c(2,3:9)]
+mod_update_names <- mod_update_names[c(2,3,5:8)]
 # mod_sens_names <- mod_sens_names[c(1,15)]
 # mod_grid_names <- mod_grid_names[c(17,21)]
 

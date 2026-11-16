@@ -443,11 +443,6 @@ save(list='CE_1a_INPUT_OBJECT',file=paste0(PATH_SS3_INPUT,'CE_1a_input.object'))
 
 ## CPUE data 
 
-```{r cpue_analyses}
-knitr::knit(paste0(PATH, "cpue_comp/IOTC_SWO_CPUE.Rmd"))
-
-```
-
 -   CPUE.1.input.R
 
 This section involves taking the CPUEs for SWO (calculated / estimated / modelled externally) and format them ready for inclusion in SS3.

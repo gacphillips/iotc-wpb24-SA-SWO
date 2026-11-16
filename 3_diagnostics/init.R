@@ -10,12 +10,12 @@ library(tidyr)
 library(RColorBrewer)
 # library(reshape)
 
-PATH <- "C:/Users/gphillips/OneDrive - Food and Agriculture Organization/Documents/Assessments/2026/SWO/SS3/"
+PATH <- [INSERT BASE FILE PATH HERE]
 PATH_DATA = paste(PATH,"data/",sep="")
 PATH_DATAPREP = paste(PATH,"1_dataprep/",sep="") ##PATH_R (R)
 PATH_MODELRUNS = paste(PATH,"2_modelruns/2026/",sep="") ##PATH_SS3 
 PATH_SENSITIVITES = paste(PATH_MODELRUNS, "sensitivities/",sep="") ## run sensitivities
-PATH_GRID = paste("C:/Users/gphillips/Documents/", "4_gridrun/",sep="") ## grid
+PATH_GRID = paste(PATH, "4_gridrun/",sep="") ## grid
 PATH_GRID_PLOT = paste(PATH_GRID, "plots/",sep="")
 PATH_DIAGNOSTICS = paste(PATH,"3_diagnostics/",sep="") 
 PATH_SS3_INPUT = paste(PATH_DATA, "SS3_input/",sep="") ##PATH_OUTPUT
