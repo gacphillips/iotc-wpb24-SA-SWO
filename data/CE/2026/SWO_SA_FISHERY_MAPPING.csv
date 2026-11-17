@@ -1,0 +1,324 @@
+"Fleet";"Gear";"SchoolType";"Fishery";"Comment"
+"AUS";"BB";"UNCL";"Other";
+"AUS";"ELL";"UNCL";"LL";
+"AUS";"GILL";"UNCL";"GL";
+"AUS";"HAND";"UNCL";"LI";
+"AUS";"PS";"FS";"Other";
+"AUS";"PSS";"UNCL";"Other";
+"AUS";"SPOR";"UNCL";"LI";
+"AUS";"TRAP";"UNCL";"Other";
+"AUS";"TRAW";"UNCL";"Other";
+"AUS";"TROL";"UNCL";"LI";
+"AUS";"LL";"UNCL";"LL";
+"AUS";"FLL";"UNCL";"LL";"Added since last assessment"
+"AUS";"RR";"UNCL";"BB";"Added since last assessment"
+"BGD";"HAND";"UNCL";"LI";
+"BGD";"GILL";"UNCL";"GL";
+"BGD";"LIFT";"UNCL";"Other";
+"BGD";"LLCO";"UNCL";"LI";
+"BGD";"TRAW";"UNCL";"Other";
+"BGD";"SBG";"UNCL";"Other";
+"BHR";"GILL";"UNCL";"GL";
+"BLZ";"FLL";"UNCL";"LL";
+"BLZ";"LL";"UNCL";"LL";
+"BLZ";"PS";"FS";"Other";
+"BLZ";"PS";"LS";"Other";
+"CHN";"FLL";"UNCL";"LL";
+"CHN";"LL";"UNCL";"LL";
+"CHN";"LLOB";"UNCL";"LL";
+"COM";"GILL";"UNCL";"GL";
+"COM";"HAND";"UNCL";"LI";
+"COM";"LLCO";"UNCL";"LI";
+"COM";"TROL";"UNCL";"LI";
+"DJI";"GILL";"UNCL";"GL";
+"EGY";"GILL";"UNCL";"GL";"Added since last assessment"
+"EGY";"HAND";"UNCL";"LI";"Added since last assessment"
+"EGY";"LLCO";"UNCL";"LI";"Added since last assessment"
+"EGY";"TROL";"UNCL";"LI";"Added since last assessment"
+"ESP";"BB";"UNCL";"Other";
+"ESP";"ELL";"UNCL";"LL";
+"ESP";"LLEX";"UNCL";"LL";
+"ESP";"PS";"FS";"PSFS";
+"ESP";"PS";"LS";"PSLS";
+"EUESP";"BB";"UNCL";"Other";
+"EUESP";"ELL";"UNCL";"LL";
+"EUESP";"LLEX";"UNCL";"LL";
+"EUESP";"PS";"FS";"PSFS";
+"EUESP";"PS";"LS";"PSLS";
+"EUESP";"LL";"UNCL";"LL";"Added since last assessment"
+"EUESP";"ELLOB";"UNCL";"LL";"Added since last assessment; SF data only"
+"EUFRA";"HAND";"UNCL";"LI";
+"EUFRA";"PS";"FS";"PSFS";
+"EUFRA";"PS";"LS";"PSLS";
+"EUFRA";"TROL";"UNCL";"LI";
+"EUFRA";"PSOB";"FS";"PSFS";"Added since last assessment; SF data only"
+"EUFRA";"PSOB";"LS";"PSLS";"Added since last assessment; SF data only"
+"EUGBR";"ELL";"UNCL";"LL";
+"EUITA";"PS";"FS";"PSFS";
+"EUITA";"PS";"LS";"PSLS";
+"EUITA";"PS";"UNCL";"PSLS";
+"EUMYT";"HAND";"UNCL";"LI";
+"EUMYT";"PS";"FS";"PSFS";
+"EUMYT";"PS";"LS";"PSLS";
+"EUMYT";"TROL";"UNCL";"LI";
+"EUMYT";"ELL";"UNCL";"LL";"Added since last assessment"
+"EUMYT";"LLCO";"UNCL";"LI";"Added since last assessment"
+"EUMYT";"ELLOB";"UNCL";"LL";"Added since last assessment; SF data only"
+"EUPRT";"ELL";"UNCL";"LL";
+"EUPRT";"LLOB";"UNCL";"LL";
+"EUREU";"ELL";"UNCL";"LL";
+"EUREU";"ELLOB";"UNCL";"LL";
+"EUREU";"HAND";"UNCL";"LI";
+"EUREU";"LLCO";"UNCL";"LI";
+"EUREU";"TROL";"UNCL";"LI";
+"FRA";"PS";"FS";"PSFS";
+"FRA";"PS";"LS";"PSLS";
+"FRA-REU";"ELL";"UNCL";"LL";
+"FRA-REU";"TROL";"UNCL";"LI";
+"FRAT";"HAND";"UNCL";"LI";
+"FRAT";"PS";"FS";"PSFS";
+"FRAT";"PS";"LS";"PSLS";
+"FRAT";"TROL";"UNCL";"LI";
+"GBR";"ELL";"UNCL";"LL";
+"GBR";"SPOR";"UNCL";"Other";
+"GBR";"HAND";"UNCL";"LI";
+"GBR";"LLOB";"UNCL";"LL";"Added since last assessment; SF data only"
+"GBRT";"HAND";"UNCL";"LI";
+"GIN";"ELL";"UNCL";"LL";
+"IDN";"BB";"UNCL";"Other";
+"IDN";"BS";"UNCL";"Other";
+"IDN";"DSEI";"UNCL";"Other";
+"IDN";"FLL";"UNCL";"LL";
+"IDN";"GILL";"UNCL";"GL";
+"IDN";"HAND";"UNCL";"LI";
+"IDN";"HLOF";"UNCL";"LI";
+"IDN";"LIFT";"UNCL";"Other";
+"IDN";"LL";"UNCL";"LL";
+"IDN";"LLCO";"UNCL";"LI";
+"IDN";"LLF";"UNCL";"Other";
+"IDN";"PS";"LS";"Other";
+"IDN";"PS";"UNCL";"Other";
+"IDN";"PSS";"UNCL";"Other";
+"IDN";"TROL";"UNCL";"LI";
+"IDN";"PSS";"LS";"Other";
+"IDN";"FLLOB";"UNCL";"LL";"Added since last assessment; SF data only"
+"IDN";"LLOB";"UNCL";"LL";"Added since last assessment; SF data only"
+"IND";"BB";"UNCL";"Other";
+"IND";"BS";"UNCL";"Other";
+"IND";"FLL";"UNCL";"LL";
+"IND";"GILL";"UNCL";"GL";
+"IND";"GIOF";"UNCL";"GL";
+"IND";"HAND";"UNCL";"LI";
+"IND";"LIFT";"UNCL";"Other";
+"IND";"LL";"UNCL";"LL";
+"IND";"LLCO";"UNCL";"LI";
+"IND";"LLEX";"UNCL";"LL";
+"IND";"PSS";"UNCL";"Other";
+"IND";"RIN";"UNCL";"Other";
+"IND";"TRAW";"UNCL";"Other";
+"IND";"TROL";"UNCL";"LI";
+"IND";"GL";"UNCL";"GL";
+"IND";"HARP";"UNCL";"Other";"Added since last assessment"
+"IRN";"GILL";"UNCL";"GL";
+"IRN";"GIOF";"UNCL";"GL";
+"IRN";"HAND";"UNCL";"LI";
+"IRN";"PS";"FS";"Other";
+"IRN";"PS";"LS";"Other";
+"IRN";"PS";"UNCL";"Other";
+"IRN";"LL";"UNCL";"LL";"Added since last assessment"
+"JOR";"BB";"UNCL";"Other";
+"JOR";"GILL";"UNCL";"GL";
+"JOR";"HAND";"UNCL";"LI";
+"JOR";"LLCO";"UNCL";"LI";
+"JOR";"OTHER";"UNCL";"Other";
+"JOR";"PSS";"UNCL";"Other";
+"JOR";"SPOR";"UNCL";"LI";
+"JOR";"TROL";"UNCL";"LI";
+"JOR";"TRAW";"UNCL";"Other";
+"JPN";"GILL";"UNCL";"GL";
+"JPN";"LL";"UNCL";"LL";
+"JPN";"LLOB";"UNCL";"LL";
+"JPN";"PS";"FS";"Other";
+"JPN";"PS";"LS";"Other";
+"JPN";"PS";"UNCL";"Other";
+"JPN";"PSOB";"UNCL";"Other";
+"KEN";"ELL";"UNCL";"LL";
+"KEN";"GILL";"UNCL";"GL";
+"KEN";"HAND";"UNCL";"LI";
+"KEN";"SPOR";"UNCL";"LI";
+"KEN";"TROL";"UNCL";"LI";
+"KEN";"PS";"LS";"Other";
+"KEN";"LL";"UNCL";"LL";"Added since last assessment"
+"KEN";"LLCO";"UNCL";"LI";"Added since last assessment"
+"KEN";"LLOB";"UNCL";"LL";"Added since last assessment; SF data only"
+"KOR";"BB";"UNCL";"Other";
+"KOR";"LL";"UNCL";"LL";
+"KOR";"LLOB";"UNCL";"LL";
+"KOR";"PS";"FS";"PSFS";
+"KOR";"PS";"LS";"PSLS";
+"KOR";"PS";"UNCL";"PSLS";
+"KOR";"PSOB";"UNCL";"PSLS";
+"LKA";"BB";"UNCL";"Other";
+"LKA";"BS";"UNCL";"Other";
+"LKA";"FLL";"UNCL";"LL";
+"LKA";"G/L";"UNCL";"GL";
+"LKA";"GILL";"UNCL";"GL";
+"LKA";"GIOF";"UNCL";"GL";
+"LKA";"GL";"UNCL";"GL";
+"LKA";"HAND";"UNCL";"LI";
+"LKA";"HLOF";"UNCL";"LI";
+"LKA";"HARP";"UNCL";"Other";
+"LKA";"HATR";"UNCL";"LI";
+"LKA";"LG";"UNCL";"LL";
+"LKA";"LL";"UNCL";"LL";
+"LKA";"LLCO";"UNCL";"LI";
+"LKA";"PS";"LS";"Other";
+"LKA";"RIN";"UNCL";"Other";
+"LKA";"RNOF";"UNCL";"Other";
+"LKA";"TROL";"UNCL";"LI";
+"LKA";"TROLM";"UNCL";"LI";
+"LKA";"UNCL";"UNCL";"Other";
+"MDG";"BB";"UNCL";"Other";
+"MDG";"ELL";"UNCL";"LL";
+"MDG";"LL";"UNCL";"LL";
+"MDG";"TROL";"UNCL";"LI";
+"MDG";"LLCO";"UNCL";"LI";"Added since last assessment"
+"MDG";"GILL";"UNCL";"GL";"Added since last assessment; SF data only"
+"MDV";"BB";"FD";"BB";
+"MDV";"BB";"FS";"BB";
+"MDV";"BB";"LS";"BB";
+"MDV";"BB";"UNCL";"BB";
+"MDV";"BBM";"UNCL";"BB";
+"MDV";"BBN";"UNCL";"BB";
+"MDV";"BBOF";"UNCL";"BB";
+"MDV";"BBOF";"FS";"BB";
+"MDV";"BBOF";"LS";"BB";
+"MDV";"BBOF";"FD";"BB";
+"MDV";"FLL";"UNCL";"LL";
+"MDV";"FN";"UNCL";"Other";
+"MDV";"HAND";"FS";"LI";
+"MDV";"HAND";"UNCL";"LI";
+"MDV";"HLOF";"UNCL";"LI";
+"MDV";"LL";"UNCL";"LL";
+"MDV";"LLCO";"UNCL";"LI";
+"MDV";"TROL";"UNCL";"LI";
+"MDV";"TROLM";"UNCL";"LI";
+"MDV";"TROLN";"UNCL";"LI";
+"MDV";"UNCL";"UNCL";"Other";
+"MOZ";"BS";"UNCL";"Other";
+"MOZ";"ELL";"UNCL";"LL";
+"MOZ";"FLL";"UNCL";"LL";
+"MOZ";"GILL";"UNCL";"GL";
+"MOZ";"HAND";"UNCL";"LI";
+"MOZ";"SPOR";"UNCL";"LI";
+"MOZ";"TROL";"UNCL";"LI";
+"MOZ";"PS";"FS";"Other";
+"MOZ";"FLLOB";"UNCL";"LL";"Added since last assessment; SF data only"
+"MOZ";"PSS";"UNCL";"Other";
+"MUS";"ELL";"UNCL";"LL";
+"MUS";"FLL";"UNCL";"LL";
+"MUS";"HAND";"UNCL";"LI";
+"MUS";"LL";"UNCL";"LL";
+"MUS";"PS";"FS";"Other";
+"MUS";"PS";"LS";"Other";
+"MUS";"PS";"UNCL";"Other";
+"MUS";"PSOB";"LS";"Other";
+"MUS";"PSOB";"UNCL";"Other";
+"MUS";"SPOR";"UNCL";"LI";
+"MUS";"TROL";"UNCL";"LI";
+"MUS";"LLCO";"UNCL";"LI";"Added since last assessment"
+"MYS";"FLL";"UNCL";"LL";
+"MYS";"GILL";"UNCL";"GL";
+"MYS";"PS";"FS";"Other";
+"MYS";"PS";"LS";"Other";
+"MYS";"PSS";"UNCL";"Other";
+"MYS";"TRAW";"UNCL";"Other";
+"MYS";"TROL";"UNCL";"LI";
+"MYS";"HAND";"UNCL";"LI";"Added since last assessment"
+"NEI-DFRZ";"ELL";"UNCL";"LL";
+"NEI-DFRZ";"LL";"UNCL";"LL";
+"NEI-ICE";"FLL";"UNCL";"LL";
+"NEI-OTH";"PS";"FS";"Other";
+"NEI-OTH";"PS";"LS";"Other";
+"NEI-SUN";"PS";"FS";"Other";
+"NEI-SUN";"PS";"LS";"Other";
+"NEICE";"FLL";"UNCL";"LL";
+"NEIDN";"FLL";"UNCL";"LL";"Added since last assessment"
+"NEIFR";"ELL";"UNCL";"LL";
+"NEIFR";"LL";"UNCL";"LL";
+"NEIPS";"PS";"FS";"PSFS";
+"NEIPS";"PS";"LS";"PSLS";
+"NEISU";"PS";"FS";"Other";
+"NEISU";"PS";"LS";"Other";
+"OMN";"BS";"UNCL";"Other";
+"OMN";"FN";"UNCL";"Other";
+"OMN";"GILL";"UNCL";"GL";
+"OMN";"GIOF";"UNCL";"GL";
+"OMN";"HAND";"UNCL";"LI";
+"OMN";"TRAP";"UNCL";"Other";
+"OMN";"TROL";"UNCL";"LI";
+"OMN";"LL";"UNCL";"LL";
+"OMN";"PS";"UNCL";"PSLS";
+"OMN";"FLL";"UNCL";"LL";"Added since last assessment"
+"OMN";"HLOF";"UNCL";"LI";"Added since last assessment"
+"PAK";"GILL";"UNCL";"GL";
+"PHL";"LL";"UNCL";"LL";
+"PHL";"PS";"LS";"Other";
+"PRT";"ELL";"UNCL";"LL";
+"QAT";"GILL";"UNCL";"GL";
+"SEN";"ELL";"UNCL";"LL";
+"SOM";"GILL";"UNCL";"GL";
+"SOM";"HAND";"UNCL";"LI";
+"SOM";"LLCO";"UNCL";"LI";
+"SUN";"GILL";"UNCL";"GL";
+"SUN";"LL";"UNCL";"LL";
+"SUN";"PS";"FS";"Other";
+"SUN";"PS";"LS";"Other";
+"SUN";"PSS";"UNCL";"Other";
+"SYC";"BB";"UNCL";"BB";
+"SYC";"GILL";"UNCL";"GL";
+"SYC";"HAND";"UNCL";"LI";
+"SYC";"LL";"UNCL";"LL";
+"SYC";"PS";"FS";"PSFS";
+"SYC";"PS";"LS";"PSLS";
+"SYC";"PS";"UNCL";"PSLS";
+"SYC";"TROL";"UNCL";"LI";
+"SYC";"ELL";"UNCL";"LL";"Added since last assessment"
+"SYC";"FLL";"UNCL";"LL";"Added since last assessment"
+"SYC";"LLCO";"UNCL";"LI";"Added since last assessment"
+"THA";"FLL";"UNCL";"LL";
+"THA";"LL";"UNCL";"LL";
+"THA";"PS";"FS";"Other";
+"THA";"PS";"LS";"Other";
+"THA";"PSS";"UNCL";"Other";
+"TMP";"GILL";"UNCL";"GL";
+"TWN";"FLL";"UNCL";"LL";
+"TWN";"GILL";"UNCL";"GL";
+"TWN";"LL";"UNCL";"LL";
+"TWN";"LLOB";"UNCL";"LL";
+"TWN";"GIOF";"UNCL";"GL";
+"TZA";"BB";"UNCL";"Other";
+"TZA";"ELL";"UNCL";"LL";
+"TZA";"FLL";"UNCL";"LL";
+"TZA";"GILL";"UNCL";"GL";
+"TZA";"HAND";"UNCL";"LI";
+"TZA";"OTHER";"UNCL";"Other";
+"TZA";"PS";"FS";"PSFS";
+"TZA";"PS";"LS";"PSLS";
+"TZA";"PSS";"UNCL";"Other";
+"TZA";"TROL";"UNCL";"LI";
+"TZA";"LLCO";"UNCL";"LI";
+"TZA";"RIN";"UNCL";"Other";
+"TZA";"LL";"UNCL";"LL";
+"VUT";"FLL";"UNCL";"LL";"Added since last assessment"
+"YEM";"GILL";"UNCL";"GL";
+"YEM";"HAND";"UNCL";"LI";
+"YEM";"TROL";"UNCL";"LI";
+"ZAF";"ELL";"UNCL";"LL";
+"ZAF";"GILL";"UNCL";"GL";
+"ZAF";"LL";"UNCL";"LL";
+"ZAF";"SPOR";"UNCL";"LI";
+"ZAF";"TROL";"UNCL";"LI";
+"ZAF";"FLL";"UNCL";"LL";"Added since last assessment"
+"ZAF";"SLL";"UNCL";"LL";"Added since last assessment"
+"ZAF";"LLOB";"UNCL";"LL";"Added since last assessment; SF data only"
