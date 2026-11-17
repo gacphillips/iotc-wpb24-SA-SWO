@@ -1,4 +1,4 @@
-# IOTC WPB 2026 – Swordfish (SWO) Stock Synthesis Assessment
+# IOTC WPB 2026 – Swordfish (SWO) Stock Synthesis Assessment 🎣
 
 Code and model files for the 2026 Indian Ocean Tuna Commission (IOTC) Working Party on Billfish (WPB) swordfish stock assessment, run in Stock Synthesis (SS3).
 
