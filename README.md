@@ -29,11 +29,11 @@ The repository covers the full workflow:
 | `2_modelruns/2026` | 2026 SS3 model runs (base model and sensitivities) |
 | `3_diagnostics` | Model diagnostics |
 | `4_gridrun` | Model grid runs |
-| `data` | Input data *[confirm / expand]* |
+| `data` | Input data |
 
 ### Running the grid and diagnostics
 
-The grid (`4_gridrun`) can be run before the diagnostics (`3_diagnostics`). If you run the diagnostics first, you will need to comment out ("hash out") the grid diagnostics, which are switched on by default.
+The grid (`4_gridrun`) can be run before the diagnostics (`3_diagnostics`). If you run the diagnostics first, you will need to make sure the grid diagnostics are commented out ("hashed out").
 
 ## Data
 
